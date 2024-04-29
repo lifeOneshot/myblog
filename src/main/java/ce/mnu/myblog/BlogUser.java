@@ -27,5 +27,5 @@ public class BlogUser {
 	public void setName(String n) { name=n; }
 	
 	public String getPasswd() { return passwd; }
-	public void setPasswd(String p) { email=p; }
+	public void setPasswd(String p) { passwd=p; }
 }
