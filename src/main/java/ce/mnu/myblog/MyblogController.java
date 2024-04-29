@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping(path="/myblog")
@@ -31,25 +34,45 @@ public class MyblogController {
 		return "signup_done";
 	}
 	
-//	@PostMapping(path="/login")
-//	public String login(@RequestParam(name="email") String email, @RequestParam(name="passwd") String passwd, 
-//			HttpSession session, RedirectAttributes rd) {
-//		model.addAttribute("user", new BlogUser());		
-//		return "login";
-//	}
-//	@PostMapping(path="/find")
-//	public String findUser(@RequestParam(name="email") String email, HttpSession session, Model model, RedirectAttributes rd){
-//		BlogUser user = userRepository.findByEmail(email);
-//		if(user != null) {
-//			model.addAttribute("user", user);
-//			return "find_done";
-//		}
-//		rd.addFlashAttribute("reason", "wrong email");
-//		return "redirect:/error";
-//	}
-//	
-//	@GetMapping(path="/find")
-//	public String find() {
-//		return "find_user";
-//	}
+	@PostMapping(path="/login")//로그인 기능
+	public String login(@RequestParam(name="email") String email, @RequestParam(name="passwd") String passwd, 
+			HttpSession session, RedirectAttributes rd) {
+		BlogUser user = userRepository.findByEmail(email);
+		if(user != null){
+			if(passwd.equals(user.getPasswd())){
+				session.setAttribute("email", email);
+				return "login_done";
+			}
+		}
+		rd.addFlashAttribute("reason", "wrong password");
+		return "redirect:/error";
+	}
+
+	@GetMapping(path="/login") //로그인
+	public String loginForm(){
+		return "login";
+	}
+
+	@GetMapping(path="/logout")//로그아웃
+	public String logout(HttpSession session){
+		session.invalidate();
+		return "login";
+	}
+	
+	//유저 찾기
+	@PostMapping(path="/find")
+	public String findUser(@RequestParam(name="email") String email, HttpSession session, Model model, RedirectAttributes rd){
+		BlogUser user = userRepository.findByEmail(email);
+		if(user != null) {
+			model.addAttribute("user", user);
+			return "find_done";
+		}
+		rd.addFlashAttribute("reason", "wrong email");
+		return "redirect:/error";
+	}
+	
+	@GetMapping(path="/find")
+	public String find() {
+		return "find_user";
+	}
 }
