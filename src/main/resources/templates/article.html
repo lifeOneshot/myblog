@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<style>
+		table, td {
+		border: 1px solid lightgray;
+		border-collapse: collapse;
+		}
+		th {
+		border: 1px solid white;
+		border-collapse: collapse;
+		}
+		th{
+		background-color: #96D4D4;
+		}
+	</style>
+	<title>게시글 목록</title>
+</head>
+<body>
+	<h3>게시글 목록</h3>
+	<p>
+		<a th:href="@{/myblog}">첫페이지</a>
+		<a th:href="@{/myblog/bbs/write}">글 작성</a>
+	</p>
+	<table style="width:100%">
+	<tr>
+		<th>번호</th>
+		<th>제목</th>
+		<th>작성자</th>
+		<th>내용</th>
+	</tr>
+	<tr th:each="a: ${articles}">
+		<td th:text="${a.num}"></td>
+		<td th:text="${a.title}"></td>
+		<td th:text="${a.author}"></td>
+		<td th:text="${a.body}"></td>
+	</tr>
+	</table>
+</body>
+</html>
