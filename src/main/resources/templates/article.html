@@ -7,35 +7,22 @@
 		border: 1px solid lightgray;
 		border-collapse: collapse;
 		}
-		th {
-		border: 1px solid white;
-		border-collapse: collapse;
-		}
-		th{
-		background-color: #96D4D4;
-		}
 	</style>
-	<title>게시글 목록</title>
+	<title>게시글</title>
 </head>
 <body>
-	<h3>게시글 목록</h3>
+	<h3>게시글</h3>
 	<p>
-		<a th:href="@{/myblog}">첫페이지</a>
-		<a th:href="@{/myblog/bbs/write}">글 작성</a>
+		<a th:href="@{/myblog/bbs}">글 목록</a>
 	</p>
 	<table style="width:100%">
-	<tr>
-		<th>번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>내용</th>
-	</tr>
-	<tr th:each="a: ${articles}">
-		<td th:text="${a.num}"></td>
-		<td th:text="${a.title}"></td>
-		<td th:text="${a.author}"></td>
-		<td th:text="${a.body}"></td>
-	</tr>
+		<tr><td>제목</td>><td>[[${article.title}]]</td></tr>
+		<tr><td>작성자</td>><td>[[${article.author}]]</td></tr>
+		<tr><td>내용</td>><td>[[${article.body}]]</td></tr>
 	</table>
+	<form th:action="@{/myblog/bbs/delete/{num}(num=${article.num})}" method="post">
+        	<input type="submit" value="삭제"/>
+    	</form>
+    	<a th:href="@{/myblog/bbs/modify/{num}(num=${article.num})}">수정</a>
 </body>
 </html>
