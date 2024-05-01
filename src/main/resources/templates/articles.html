@@ -33,6 +33,7 @@
 				<a th:href="@{/myblog/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
 			<td th:text="${a.author}"></td>
 		</tr>
+		<!--  
 		<tr>
 			<td colspan=3>
 				<th:block th:each="p:${#numbers.sequence(0, articles.totalPages -1)}">
@@ -40,6 +41,7 @@
 				</th:block>
 			</td>
 		</tr>
+		-->
 	</table>
 </body>
 </html>

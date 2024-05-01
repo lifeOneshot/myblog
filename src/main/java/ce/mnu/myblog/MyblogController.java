@@ -105,8 +105,8 @@ public class MyblogController {
 		}
 		Iterable<ArticleHeader> data = articleRepository.findArticleHeaders();
 		
-		model.addAttribute("articles", data);
-		return "article";
+		model.addAttribute("article", data);
+		return "articles";
 	}
 	
 	@GetMapping(path="/bbs/read")
