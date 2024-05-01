@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ce.mnu.BlogMNU.SiteUser;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -90,7 +91,20 @@ public class MyblogController {
 	}
 	
 	@PostMapping(path="/bbs/add")
-	public String addArticle(@ModelAttribute Article article, Model model) {
+	public String addArticle(@ModelAttribute Article article, HttpSession session, 
+			RedirectAttributes rd, Model model) {
+		String user = (String) session.getAttribute("email");
+		if (user == null) {
+			rd.addAttribute("reason", "login required");
+			return "redirect:/error";
+		}
+		
+		BlogUser currentUser = userRepository.findByEmail(user);
+		
+	    if (currentUser != null) {
+	        article.setAuthor(currentUser.getName());
+	    }
+		
 		articleRepository.save(article);
 		model.addAttribute("article", article);
 		return "saved";
