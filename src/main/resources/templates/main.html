@@ -11,9 +11,10 @@
 	<p><a th:href="@{/myblog/bbs}">게시글</a></p>
 	<p><a th:href="@{/myblog/logout}">사용자 로그아웃</a></p>
 	
+	<!-- 자동 로그인 -->
 	<form action="#" th:action="@{/myblog/login}" method="post">
-		<input type="hidden" value="admin@1" name="email"/>
-		<input type="hidden" value="admin" name="passwd"/>
+		<input type="hidden" value="admin@1" name="email"/> <!-- 이메일 value값 변경 -->
+		<input type="hidden" value="admin" name="passwd"/> <!-- 비밀번호 value값 변경 -->
 		<input type="submit" value="자동로그인"/>
 	</form> 
 </body>
