@@ -109,19 +109,15 @@ public class MyblogController {
 	}
 	
 	@GetMapping(path="/bbs")
-	public String getAllArticles(Model model, HttpSession session, RedirectAttributes rd) {
-		String email = (String) session.getAttribute("email");
-		if(email == null) {
-			rd.addFlashAttribute("reason", "login required");
-			return "redirect:/error";
-		}
+	public String getAllArticles(Model model) {
+		
 		Iterable<ArticleHeader> data = articleRepository.findArticleHeaders();
 		
-		model.addAttribute("article", data);
+		model.addAttribute("articles", data);
 		return "articles";
 	}
 	
-	@GetMapping(path="/bbs/read")
+	@GetMapping(path="/read")
 	public String readArticle(@RequestParam(name="num") String num,
 			HttpSession session, Model model) {
 		Long no = Long.valueOf(num);
