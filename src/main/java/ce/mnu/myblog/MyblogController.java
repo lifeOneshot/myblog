@@ -116,7 +116,7 @@ public class MyblogController {
 			pageNo = Integer.valueOf(pno);
 		}
 		
-		Integer pageSize = 1;
+		Integer pageSize = 10;
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
 		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
 		System.out.println(pageNo + " - " +paging+ " - " + data);
