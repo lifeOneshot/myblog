@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.domain.*;
 
 
 @Controller
@@ -109,9 +110,16 @@ public class MyblogController {
 	}
 	
 	@GetMapping(path="/bbs")
-	public String getAllArticles(Model model) {
+	public String getAllArticles(@RequestParam(name="pno", defaultValue="0") String pno, Model model) {
+		Integer pageNo = 0;
+		if(pno != null) {
+			pageNo = Integer.valueOf(pno);
+		}
 		
-		Iterable<ArticleHeader> data = articleRepository.findArticleHeaders();
+		Integer pageSize = 1;
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
+		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
+		System.out.println(pageNo + " - " +paging+ " - " + data);
 		
 		model.addAttribute("articles", data);
 		return "articles";

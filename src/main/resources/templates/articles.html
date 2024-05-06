@@ -32,16 +32,14 @@
 			<td>
 				<a th:href="@{/myblog/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
 			<td th:text="${a.author}"></td>
-		</tr>
-		<!--  
+		</tr> 
 		<tr>
 			<td colspan=3>
-				<th:block th:each="p:${#numbers.sequence(0, articles.totalPages -1)}">
-					<a th:href="@{/blogmnu/siteuser/bbs?pno={p}(p=${p})}">[[${p}]]</a>
+				<th:block th:each="p:${#numbers.sequence(1, articles.totalPages)}">
+					<a th:href="@{/myblog/bbs?pno={p}(p=${p-1})}">[[${p}]]</a>
 				</th:block>
 			</td>
 		</tr>
-		-->
 	</table>
 </body>
 </html>
