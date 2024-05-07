@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua:wght@400;500;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Jua", sans-serif;
+    user-select: none;
+}
+
+/* 배너 섹션 */
+.banner{
+    background: #ffaa00;
+    padding: 10px;
+    padding-left: 3%;
+    padding-right: 2%;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+}
+.logo{
+    font-family: "Roboto-Bold", Helvetica;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 34px;
+    text-decoration: none;
+}
+.profile-icon{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ddd;
+    margin-left: 20px;
+    cursor: pointer;
+}
+nav{
+    flex: 1;
+    text-align: right;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 15px;
+    position: relative;
+
+    color: #fff;
+    font-size: 17px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
+
+/* 블록 섹션 */
+
+.box_container{
+    width: 100%;
+    height: 100vh;
+    margin: auto;
+    /*border: 1px solid red;*/
+    position: relative;
+}
+.box_container ul{
+    width: 75%;
+    height: 75%;
+    /* margin-right: 3%; */
+    display: block;
+    float: right;
+
+    /* border: 1px solid red; */
+}
+.box_container .box{
+    list-style: none;
+    width: 30%;
+    height: 40%;
+    margin-left: 5%;
+    /* margin-right: 20px; */
+    margin-bottom: 40px;
+    display: inline-block;
+    background-color: rgba(200, 200, 200, 0.552);
+    cursor: pointer;
+    transition: 0.2s;
+    
+}
+
+.box_container .box .thumbnail{
+    width: 98%;
+    height: 60%;
+    margin: 0 auto;
+    display: block;
+    /* border: 1px solid red;  */
+}
+.box_container .box .con{
+    padding: 5px;
+    height: 10%;
+    border-radius: 2px;
+    background: white;
+    border: 1px solid rgb(0, 0, 0);
+}
+.box_container .box .article{
+    padding: 5px;
+    height: 10%;
+    border-radius: 2px;
+    background: white;
+    /*border: 1px solid blue;*/
+}
+.box_container button{
+    width: 100%;
+    background:none;
+    border:none;
+    color: #000;
+    font-size: 24px;
+    text-decoration: none;
+    text-align: left;
+}
+.box_container p{
+    color: #000;
+}
+
+
+.inner_banner{
+    background: #ffaa00;
+    padding: 10px;
+    padding-left: 3%;
+    padding-right: 2%;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+.in_navbar{
+    display: flex;
+    align-items:center;
+}
+.in_nav{
+    flex: 1;
+    text-align: center;
+}
+.in_navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+}
+
+.in_navbar ul li {
+    margin: 0 30px; /* 좌우 여백 조절 */
+    color: #fff;
+    font-size: 17px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/*로그인*/
+
+.user-actions-container {
+    background: #ffffff; 
+    position: absolute;
+    top: 15%; 
+    right: 5%;
+    border-radius: 10px; 
+    border: 2px solid black; 
+    padding: 10px;
+}
+
+.user-actions {
+    display: flex;
+    flex-direction: column; 
+}
+
+.action-box {
+    background: #ffaa00; 
+    border-radius: 10px; 
+    padding: 10px; 
+    text-align: center;
+    margin-bottom: 10px; /* 여백 추가 */
+}
+
+.action-box:last-child {
+    margin-bottom: 0; /* 마지막 요소에는 여백을 주지 않음 */
+}
+
+.action-box button {
+    background:none;
+    border:none;
+    color: #fff; 
+    text-decoration: none; 
+    font-size: 26px;
+    text-align: center;
+}

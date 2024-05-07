@@ -2,10 +2,70 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>첫 페이지</title>
+	<link rel="stylesheet" href="css/style.css">
+	<title>BLOGHOME</title>
 </head>
 <body>
-	<h3>첫 페이지</h3>
+    <!-- 배너 섹션 -->
+    <div class="banner">
+        <div class="navbar">
+            <a href="/myblog"class="logo">BLOGHOME</a>
+            <nav>
+                <ul>
+                    <li >Friends</li>
+					<li >MyBlog</li>
+                </ul>
+            </nav>
+            <img class="profile-icon" width="10px" height="10px">  
+        </div>
+    </div>
+	
+	<!-- 컨테이너 섹션 -->
+	<section class="box_container">
+		<div class="inner_banner">
+			<div class="in_navbar">
+				<in_nav>
+					<ul>
+						<li >Friends</li>
+						<li >MyBlog</li>
+						<li >Test</li>
+					</ul>
+				</in_nav>
+			</div>
+		</div>
+		<div class="user-actions-container">
+			<div class="user-actions">
+				<div class="action-box">
+					<button onclick="window.location.href='/myblog/signup'">사용자 등록</button>
+				</div>
+				<div class="action-box">
+					<button onclick="window.location.href='/myblog/login'">사용자 로그인</button>
+				</div>
+			</div>
+		</div>
+		<li class="box">
+			<div class="con">
+				<button onclick="window.location.href='/myblog/bbs'">게시판</button>
+			</div>
+			<tr th:each="a: ${articles}">
+				<td>
+					<a th:href="@{/myblog/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+				<td th:text="${a.author}"></td>
+			</tr> 
+		</li>
+		<li class="box">
+			<div class="con">
+				<button onclick="window.location.href='/myblog/bbs'">TEST</button>
+			</div>
+			<tr th:each="a: ${articles}">
+				<td>
+					<a th:href="@{/myblog/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+				<td th:text="${a.author}"></td>
+			</tr> 
+		</li>
+	</section>
+	
+
 	<p><a th:href="@{/myblog/signup}">사용자 등록</a></p>
 	<p><a th:href="@{/myblog/login}">사용자 로그인</a></p>
 	<p><a th:href="@{/myblog/bbs}">게시글</a></p>
