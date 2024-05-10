@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 	<title>BLOGHOME</title>
 </head>
 <body>
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<!-- 로그인 아닐시 -->
-		<div th:style="${qwer} ? '' : 'display:none'" id="no_user" class="user-actions-container">
+		<div th:style="${C_log1} ? '' : 'display:none'" id="no_user" class="user-actions-container">
 			<div class="user-actions">
 				<div class="action-box">
 					<button onclick="window.location.href='/myblog/signup'">사용자 등록</button>
@@ -32,7 +32,7 @@
 		</div>
 
 		<!-- 로그인 시 -->
-		<div th:style="${asdf} ? '' : 'display:none'" id="yes_user" class="user-actions-container">
+		<div th:style="${C_log2} ? '' : 'display:none'" id="yes_user" class="user-actions-container">
 			<div class="user-actions">
 				<div class="action-box">
 					<button onclick="window.location.href='/myblog/logout'">로그아웃</button>

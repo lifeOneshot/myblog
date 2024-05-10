@@ -23,12 +23,12 @@ public class MyblogController {
 	public String main(HttpSession session, Model model) {
 		String email = (String) session.getAttribute("email");
 		if (email != null) {
-			model.addAttribute("asdf", true);
-			model.addAttribute("qwer", false);
+			model.addAttribute("login_C", true);
+			model.addAttribute("logout_C", false);
 			return "main";
 		}
-		model.addAttribute("asdf", false);
-		model.addAttribute("qwer", true);
+		model.addAttribute("login_C", false);
+		model.addAttribute("logout_C", true);
 		return "main";
 	}
 	
@@ -65,8 +65,10 @@ public class MyblogController {
 	}
 
 	@GetMapping(path="/logout")//로그아웃
-	public String logout(HttpSession session){
+	public String logout(HttpSession session, Model model){
 		session.invalidate();
+		model.addAttribute("login_C", false);
+		model.addAttribute("logout_C", true);
 		return "main";
 	}
 	
