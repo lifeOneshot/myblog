@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<!-- 로그인 아닐시 -->
-		<div th:style="${C_log1} ? '' : 'display:none'" id="no_user" class="user-actions-container">
+		<div th:style="${logout_C} ? '' : 'display:none'" id="no_user" class="user-actions-container">
 			<div class="user-actions">
 				<div class="action-box">
 					<button onclick="window.location.href='/myblog/signup'">사용자 등록</button>
@@ -32,7 +32,7 @@
 		</div>
 
 		<!-- 로그인 시 -->
-		<div th:style="${C_log2} ? '' : 'display:none'" id="yes_user" class="user-actions-container">
+		<div th:style="${login_C} ? '' : 'display:none'" id="yes_user" class="user-actions-container">
 			<div class="user-actions">
 				<div class="action-box">
 					<button onclick="window.location.href='/myblog/logout'">로그아웃</button>
