@@ -2,18 +2,29 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>회원가입</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<title>BLOGHOME</title>
 </head>
 <body>
-	<h3>회원가입</h3>
-	<form action="#" th:action="@{/myblog/signup}" th:object="${user}" method="post">
-		<p>이름:<input type="text" th:field="*{name}"/></p>
-		<p>이메일:<input type="text" th:field="*{email}"/></p>
-		<p>비밀번호:<input type="password" th:field="*{passwd}"/></p>
-		<p>
-			<input type="reset" value="취소"/>
-			<input type="submit" value="등록"/>
-		</p>
-	</form>
+	<div th:insert="~{header::banner}"></div>
+	
+	<section class="sign_box_container">
+		<li class="box">
+			<h3>회원가입</h3>
+			<div class="sign">
+				<form action="#" th:action="@{/myblog/signup}" th:object="${user}" method="post">
+					<p>이름</p>
+					<p><input type="text" th:field="*{name}"/></p>
+					<p>이메일</p>
+					<p><input type="text" th:field="*{email}"/></p>
+					<p>비밀번호</p>
+					<p><input type="password" th:field="*{passwd}"/></p>
+					<p>
+						<input type="submit" value="등록"/>
+					</p>
+				</form>
+			</div>
+		</li>
+	</section>
 </body>
 </html>

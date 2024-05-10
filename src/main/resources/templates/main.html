@@ -2,38 +2,25 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="css/style.css">
 	<title>BLOGHOME</title>
 </head>
 <body>
-    <!-- 배너 섹션 -->
-    <div class="banner">
-        <div class="navbar">
-            <a href="/myblog"class="logo">BLOGHOME</a>
-            <nav>
-                <ul>
-                    <li >Friends</li>
-					<li >MyBlog</li>
-                </ul>
-            </nav>
-            <img class="profile-icon" width="10px" height="10px">  
-        </div>
-    </div>
-	
+    <div th:insert="~{header::banner}"></div>
 	<!-- 컨테이너 섹션 -->
 	<section class="box_container">
 		<div class="inner_banner">
 			<div class="in_navbar">
 				<in_nav>
 					<ul>
-						<li >Friends</li>
-						<li >MyBlog</li>
+						<li >Test</li>
 						<li >Test</li>
 					</ul>
 				</in_nav>
 			</div>
 		</div>
-		<div class="user-actions-container">
+		<!-- 로그인 아닐시 -->
+		<div th:style="${qwer} ? '' : 'display:none'" id="no_user" class="user-actions-container">
 			<div class="user-actions">
 				<div class="action-box">
 					<button onclick="window.location.href='/myblog/signup'">사용자 등록</button>
@@ -43,6 +30,19 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- 로그인 시 -->
+		<div th:style="${asdf} ? '' : 'display:none'" id="yes_user" class="user-actions-container">
+			<div class="user-actions">
+				<div class="action-box">
+					<button onclick="window.location.href='/myblog/logout'">로그아웃</button>
+				</div>
+				<div class="action-box">
+					<button onclick="window.location.href='/myblog'">test</button>
+				</div>
+			</div>
+		</div>
+
 		<li class="box">
 			<div class="con">
 				<button onclick="window.location.href='/myblog/bbs'">게시판</button>
@@ -71,11 +71,12 @@
 	<p><a th:href="@{/myblog/bbs}">게시글</a></p>
 	<p><a th:href="@{/myblog/logout}">사용자 로그아웃</a></p>
 	
-	<!-- 자동 로그인 -->
+	<!-- 자동 로그인 
 	<form action="#" th:action="@{/myblog/login}" method="post">
-		<input type="hidden" value="admin@1" name="email"/> <!-- 이메일 value값 변경 -->
-		<input type="hidden" value="admin" name="passwd"/> <!-- 비밀번호 value값 변경 -->
+		<input type="hidden" value="admin@1" name="email"/> 
+		<input type="hidden" value="admin" name="passwd"/> 
 		<input type="submit" value="자동로그인"/>
 	</form> 
+	-->
 </body>
 </html>

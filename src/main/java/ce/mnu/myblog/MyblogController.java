@@ -20,7 +20,15 @@ public class MyblogController {
 	private UserRepository userRepository;
 	
 	@GetMapping(value = {"", "/"})
-	public String main(Model model) {
+	public String main(HttpSession session, Model model) {
+		String email = (String) session.getAttribute("email");
+		if (email != null) {
+			model.addAttribute("asdf", true);
+			model.addAttribute("qwer", false);
+			return "main";
+		}
+		model.addAttribute("asdf", false);
+		model.addAttribute("qwer", true);
 		return "main";
 	}
 	
@@ -59,7 +67,7 @@ public class MyblogController {
 	@GetMapping(path="/logout")//로그아웃
 	public String logout(HttpSession session){
 		session.invalidate();
-		return "";
+		return "main";
 	}
 	
 	//유저 찾기

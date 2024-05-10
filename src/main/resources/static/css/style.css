@@ -80,7 +80,6 @@ nav{
     margin-bottom: 40px;
     display: inline-block;
     background-color: rgba(200, 200, 200, 0.552);
-    cursor: pointer;
     transition: 0.2s;
     
 }
@@ -114,11 +113,61 @@ nav{
     font-size: 24px;
     text-decoration: none;
     text-align: left;
+    cursor: pointer;
 }
 .box_container p{
     color: #000;
 }
 
+.sign_box_container{
+    width: 100%;
+    height: 100vh;
+    margin: auto;
+    display: flex; /* 수평 가운데 정렬을 위해 flex 사용 */
+    justify-content: center; /* 수평 가운데 정렬 */
+}
+
+.sign_box_container .box{
+    list-style: none;
+    width: 30%;
+    /*height: 40%;*/
+    /* 박스가 중앙에 오도록 추가 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    transition: 0.2s;
+}
+.sign_box_container h3 {
+    margin-bottom: 30px; /* 각 요소 사이에 간격을 줍니다. */
+}
+.sign_box_container p {
+    margin-bottom: 10px; /* 각 요소 사이에 간격을 줍니다. */
+    text-align: center;
+}
+.sign_box_container input {
+    height: 20px; /* 높이를 조정 */
+    background-color: rgb(200, 200, 200);
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+.sign_box_container input[type="submit"] {
+    width: 50px;
+    background-color: #ffaa00; /* 배경색 변경 */
+    border: 1px solid rgb(0, 0, 0);
+    cursor: pointer; /* 커서 모양 변경 */
+    transition: background-color 0.3s; /* 배경색 변화에 트랜지션 적용 */
+}
+
+/* hover 효과 */
+.sign_box_container input[type="submit"]:hover {
+    background-color: #ffb92e; /* hover시 배경색 변경 */
+}
 
 .inner_banner{
     background: #ffaa00;
@@ -188,4 +237,5 @@ nav{
     text-decoration: none; 
     font-size: 26px;
     text-align: center;
+    cursor: pointer;
 }
