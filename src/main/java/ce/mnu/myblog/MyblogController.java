@@ -67,9 +67,7 @@ public class MyblogController {
 	@GetMapping(path="/logout")//로그아웃
 	public String logout(HttpSession session, Model model){
 		session.invalidate();
-		model.addAttribute("login_C", false);
-		model.addAttribute("logout_C", true);
-		return "main";
+		return "redirect:/myblog";
 	}
 	
 	//유저 찾기
