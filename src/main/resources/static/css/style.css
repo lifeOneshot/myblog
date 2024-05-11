@@ -68,7 +68,6 @@ nav{
     /* margin-right: 3%; */
     display: block;
     float: right;
-
     /* border: 1px solid red; */
 }
 .box_container .box{
@@ -123,8 +122,8 @@ nav{
     width: 100%;
     height: 100vh;
     margin: auto;
-    display: flex; /* 수평 가운데 정렬을 위해 flex 사용 */
-    justify-content: center; /* 수평 가운데 정렬 */
+    display: flex; 
+    justify-content: center; 
 }
 
 .sign_box_container .box{
@@ -143,30 +142,29 @@ nav{
     transition: 0.2s;
 }
 .sign_box_container h3 {
-    margin-bottom: 30px; /* 각 요소 사이에 간격을 줍니다. */
+    margin-bottom: 30px; 
 }
 .sign_box_container p {
-    margin-bottom: 10px; /* 각 요소 사이에 간격을 줍니다. */
+    margin-bottom: 10px; 
     text-align: center;
 }
 .sign_box_container input {
-    height: 20px; /* 높이를 조정 */
+    height: 20px; 
     background-color: rgb(200, 200, 200);
     border: none;
     border-radius: 10px;
     text-align: center;
 }
 .sign_box_container input[type="submit"] {
-    width: 50px;
-    background-color: #ffaa00; /* 배경색 변경 */
+    background-color: #ffaa00;
     border: 1px solid rgb(0, 0, 0);
-    cursor: pointer; /* 커서 모양 변경 */
-    transition: background-color 0.3s; /* 배경색 변화에 트랜지션 적용 */
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 /* hover 효과 */
 .sign_box_container input[type="submit"]:hover {
-    background-color: #ffb92e; /* hover시 배경색 변경 */
+    background-color: #ffb92e;
 }
 
 .inner_banner{
@@ -238,4 +236,26 @@ nav{
     font-size: 26px;
     text-align: center;
     cursor: pointer;
+}
+
+.articles{
+    background: #ffffeb;
+}
+
+.articles table{
+    width: 70%;
+	border: 1px solid rgb(0, 0, 0);
+	border-collapse: collapse;
+}
+.articles th{
+	border: 1px solid rgb(0, 0, 0);
+    background-color: #ffaa00;
+}
+.articles td{
+	border: 1px solid rgb(0, 0, 0);
+	border-collapse: collapse;
+}
+
+.articles .page_no {
+	text-align:center;
 }

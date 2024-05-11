@@ -52,7 +52,7 @@ public class MyblogController {
 		if(user != null){
 			if(passwd.equals(user.getPasswd())){
 				session.setAttribute("email", email);
-				return "login_done";
+				return "redirect:/myblog";
 			}
 		}
 		rd.addFlashAttribute("reason", "wrong password");
