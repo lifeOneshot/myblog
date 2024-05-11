@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     font-family: "Jua", sans-serif;
+    font-size: 30px;
     user-select: none;
 }
 
@@ -44,14 +45,11 @@ nav{
     display: inline-block;
     margin: 0 15px;
     position: relative;
-
     color: #fff;
-    font-size: 17px;
+    font-size: 20px;
     text-transform: uppercase;
     cursor: pointer;
 }
-
-
 
 /* 블록 섹션 */
 
@@ -92,14 +90,14 @@ nav{
 }
 .box_container .box .con{
     padding: 5px;
-    height: 10%;
+    height: 15%;
     border-radius: 2px;
     background: white;
     border: 1px solid rgb(0, 0, 0);
 }
 .box_container .box .article{
     padding: 5px;
-    height: 10%;
+    height: 15%;
     border-radius: 2px;
     background: white;
     /*border: 1px solid blue;*/
@@ -109,7 +107,7 @@ nav{
     background:none;
     border:none;
     color: #000;
-    font-size: 24px;
+    font-size: 27px;
     text-decoration: none;
     text-align: left;
     cursor: pointer;
@@ -120,7 +118,7 @@ nav{
 
 .sign_box_container{
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     margin: auto;
     display: flex; 
     justify-content: center; 
@@ -149,7 +147,7 @@ nav{
     text-align: center;
 }
 .sign_box_container input {
-    height: 20px; 
+    height: 50px; 
     background-color: rgb(200, 200, 200);
     border: none;
     border-radius: 10px;
@@ -160,6 +158,7 @@ nav{
     border: 1px solid rgb(0, 0, 0);
     cursor: pointer;
     transition: background-color 0.3s;
+    padding: 0 20px; /* 좌우 여백을 20px로 설정 */
 }
 
 /* hover 효과 */
@@ -233,13 +232,13 @@ nav{
     border:none;
     color: #fff; 
     text-decoration: none; 
-    font-size: 26px;
+    font-size: 30px;
     text-align: center;
     cursor: pointer;
 }
 
 .articles{
-    background: #ffffeb;
+    margin-left: 5%;
 }
 
 .articles table{
@@ -256,6 +255,42 @@ nav{
 	border-collapse: collapse;
 }
 
+.articles a{
+	text-decoration: none;
+}
+
 .articles .page_no {
 	text-align:center;
+}
+
+.articles .action-box {
+	width: 100px;
+    height: 40px;
+    float: right; /* 오른쪽으로 띄워서 표의 오른쪽에 배치 */
+    margin-top: 10px; /* 표와의 간격 조정 */
+    position: fixed;
+    right: 30%; /* 원하는 위치로 조정 */
+}
+
+.new_article{
+    margin-left: 5%;
+}
+
+.new_article input[type="submit"] {
+	width: 100px;
+    height: 40px;
+    background-color: #ffaa00;
+    border: 1px solid rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 0 20px; /* 좌우 여백을 20px로 설정 */
+}
+
+/* hover 효과 */
+.new_article input[type="submit"]:hover {
+    background-color: #ffb92e;
+}
+.new_article .action-box {
+	width: 100px;
+    height: 40px;
 }
