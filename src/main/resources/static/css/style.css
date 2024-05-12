@@ -153,16 +153,20 @@ nav{
     border-radius: 10px;
     text-align: center;
 }
-.sign_box_container input[type="submit"] {
+* input[type="submit"] {
+	height: 50px;
+	color: #fff;
     background-color: #ffaa00;
     border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
     padding: 0 20px; /* 좌우 여백을 20px로 설정 */
+    font-size: 24px;
 }
 
 /* hover 효과 */
-.sign_box_container input[type="submit"]:hover {
+* input[type="submit"]:hover {
     background-color: #ffb92e;
 }
 
@@ -237,6 +241,23 @@ nav{
     cursor: pointer;
 }
 
+.action-box-main {
+    background: #ffaa00; 
+    border-radius: 10px; 
+    padding: 10px; 
+    text-align: center;
+    margin-bottom: 10px; /* 여백 추가 */
+}
+.action-box-main button {
+    background:none;
+    border:none;
+    color: #fff; 
+    text-decoration: none; 
+    font-size: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
 .articles{
     margin-left: 5%;
 }
@@ -271,26 +292,89 @@ nav{
     position: fixed;
     right: 30%; /* 원하는 위치로 조정 */
 }
+.articles .action-box-main {
+	width: 100px;
+    height: 40px;
+    float: right; /* 오른쪽으로 띄워서 표의 오른쪽에 배치 */
+    margin-top: 10px; /* 표와의 간격 조정 */
+    position: fixed;
+    left: 5%; /* 원하는 위치로 조정 */
+}
+.action-box-main, .action-box {
+    display: inline-block; /* 버튼을 가로로 배치하기 위해 인라인 블록 요소로 설정 */
+    margin-right: 10px; /* 버튼 사이의 간격 조정 */
+}
 
 .new_article{
     margin-left: 5%;
 }
 
-.new_article input[type="submit"] {
-	width: 100px;
-    height: 40px;
-    background-color: #ffaa00;
-    border: 1px solid rgb(0, 0, 0);
-    cursor: pointer;
-    transition: background-color 0.3s;
-    padding: 0 20px; /* 좌우 여백을 20px로 설정 */
-}
-
-/* hover 효과 */
-.new_article input[type="submit"]:hover {
-    background-color: #ffb92e;
-}
 .new_article .action-box {
 	width: 100px;
     height: 40px;
+}
+
+.new_article a {
+	height: 80px;
+	background-color: #ffaa00;
+    border: 1px solid rgb(0, 0, 0);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 11px 20px; /* 좌우 여백을 20px로 설정 */
+    font-size: 24px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.new_article a:hover {
+    background-color: #ffb92e;
+}
+
+.new_article input[type="text"] {
+    width: 70%;
+}
+
+.new_article textarea {
+    width: 70%;
+    height: 50vh;
+    resize: vertical;
+}
+
+.new_article label {
+    display: block; /* 라벨을 블록 요소로 설정하여 줄 바꿈을 가능하게 합니다. */
+    margin-bottom: 10px; /* 라벨 아래 여백을 추가합니다. */
+}
+
+.article{
+    margin-left: 5%;
+}
+
+.article table{
+    width: 70%;
+	border: 1px solid rgb(0, 0, 0);
+	border-collapse: collapse;
+}
+.article th{
+	border: 1px solid rgb(0, 0, 0);
+   background-color: #ffaa00;
+}
+.article td{
+	border: 1px solid rgb(0, 0, 0);
+	border-collapse: collapse;
+}
+
+.article a {
+	height: 80px;
+	background-color: #ffaa00;
+    border: 1px solid rgb(0, 0, 0);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 11px 20px; /* 좌우 여백을 20px로 설정 */
+    font-size: 24px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.article a:hover {
+    background-color: #ffb92e;
 }

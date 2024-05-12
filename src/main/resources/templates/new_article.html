@@ -10,8 +10,10 @@
     <div class="new_article">
 		<h3>게시물 글 작성</h3>
 		<form action="#" th:action="@{/myblog/bbs/add}" th:object="${article}" method="post">
-			<p>제목: <input type="text" th:field="*{title}"/></p>	
-			<p>내용: <textarea th:field="*{body}"/></p>
+			<p>제목: </p>
+			<p><input type="text" th:field="*{title}"/></p>	
+			<p>내용: </p>
+			<p><textarea th:field="*{body}"/></p>
 			<p>
 				<a th:href="@{/myblog/bbs}">글 목록</a>
 				<input type="submit" value="등록"/>
