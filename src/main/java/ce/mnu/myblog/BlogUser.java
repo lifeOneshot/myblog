@@ -15,7 +15,7 @@ public class BlogUser {
 	@Column(length=50, unique=true, nullable=false)
 	private String email;
 	
-	@Column(length=20, nullable=false)
+	@Column(length=20, unique=true, nullable=false)
 	private String name;
 	
 	@Column(length=20, nullable=false, name="password")
