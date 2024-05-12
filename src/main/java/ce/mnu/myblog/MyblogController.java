@@ -51,7 +51,7 @@ public class MyblogController {
 	
 	@PostMapping(path="/login")//로그인 기능
 	public String login(@RequestParam(name="email") String email, @RequestParam(name="passwd") String passwd, 
-			HttpSession session, RedirectAttributes rd) {
+			HttpServletRequest request, HttpSession session, RedirectAttributes rd) {
 		BlogUser user = userRepository.findByEmail(email);
 		if(user != null){
 			if(passwd.equals(user.getPasswd())){
@@ -60,8 +60,9 @@ public class MyblogController {
 				return "redirect:/";
 			}
 		}
-		rd.addFlashAttribute("reason", "wrong password");
-		return "redirect:/error";
+		request.setAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다.");
+        request.setAttribute("url", "/login");	
+        return "alert";
 	}
 
 	@GetMapping(path="/login") //로그인
@@ -77,14 +78,17 @@ public class MyblogController {
 	
 	//유저 찾기
 	@PostMapping(path="/find")
-	public String findUser(@RequestParam(name="email") String email, HttpSession session, Model model, RedirectAttributes rd){
+	public String findUser(@RequestParam(name="email") String email,
+			HttpServletRequest request,
+			HttpSession session, Model model, RedirectAttributes rd){
 		BlogUser user = userRepository.findByEmail(email);
 		if(user != null) {
 			model.addAttribute("user", user);
 			return "find_done";
 		}
-		rd.addFlashAttribute("reason", "wrong email");
-		return "redirect:/error";
+		request.setAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다.");
+        request.setAttribute("url", "/login");
+        return "alert";
 	}
 	
 	@GetMapping(path="/find")
