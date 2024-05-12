@@ -298,7 +298,7 @@ public class MyblogController {
 	        rd.addFlashAttribute("reason", "user not found");
 	        return "redirect:/error";
 	    }
-
+	    
 	    model.addAttribute("user", currentUser);
 
 	    return "withdrawal";
@@ -379,8 +379,8 @@ public class MyblogController {
 	    }
 	    
 	    userRepository.save(currentUser);
-	    session.setAttribute("email", user.getEmail());
-	    session.setAttribute("name", user.getName());
+	    session.setAttribute("email", currentUser.getEmail());
+	    session.setAttribute("name", currentUser.getName());
 
 	    model.addAttribute("user", currentUser);
 	    if (email != null) {
