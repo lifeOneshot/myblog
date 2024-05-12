@@ -16,10 +16,27 @@
 		<a th:href="@{/myblog/bbs}">글 목록</a>
 	</p>
 	<table style="width:100%">
-		<tr><td>제목</td>><td>[[${article.title}]]</td></tr>
-		<tr><td>작성자</td>><td>[[${article.author}]]</td></tr>
-		<tr><td>내용</td>><td>[[${article.body}]]</td></tr>
+		<tr><td>제목</td><td>[[${article.title}]]</td></tr>
+		<tr><td>작성자</td><td>[[${article.author}]]</td></tr>
+		<tr><td>내용</td><td>[[${article.body}]]</td></tr>
 	</table>
+	
+	<form action="#" th:action="@{/myblog/comment}" th:object="${comments}" method="post">
+		<p><input type="text" th:field="*{content}"/></p>
+		<p>
+			<input type="reset" value="취소"/>
+			<input type="submit" value="등록"/>
+		</p>
+	</form>
+	
+	<ul th:each="c: ${comments}">
+		<li>[[${c.author}]]</li>
+		<li>[[${c.content}]]</li>
+	</ul>
+	<th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
+		<a th:if="${page != nowpage}" th:href="@{/myblog/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
+		<strong th:if="${page == nowpage}">[[${page}]]</strong> 
+	</th:block>
 	<!-- 
 	<form th:action="@{/myblog/bbs/delete/{num}(num=${article.num})}" method="post">
         	<input type="submit" value="삭제"/>

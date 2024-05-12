@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.*;
 
@@ -90,22 +92,30 @@ public class MyblogController {
 	//게시판 관련
 	@Autowired
 	private ArticleRepository articleRepository;
+	@Autowired
+	private ArticleService articleService;
 	
 	@GetMapping(path="/bbs/write")
-	public String boardForm(Model model) {
+	public String boardForm(Model model, 
+			HttpSession session,
+			HttpServletRequest request) {
+		String user = articleService.getUserData(session);
+		
+		if (user == null) {
+			request.setAttribute("msg", "로그인이 필요한 기능입니다.");
+	        request.setAttribute("url", "/myblog/login");
+	        return "alert";
+		}
 		model.addAttribute("article", new Article());
 		return "new_article";
 	}
 	
 	@PostMapping(path="/bbs/add")
-	public String addArticle(@ModelAttribute Article article, HttpSession session, 
+	public String addArticle(@ModelAttribute Article article, 
+			HttpSession session,
+			HttpServletRequest request,
 			RedirectAttributes rd, Model model) {
-		String user = (String) session.getAttribute("email");
-		if (user == null) {
-			rd.addAttribute("reason", "login required");
-			return "redirect:/error";
-		}
-		
+		String user = articleService.getUserData(session);
 		BlogUser currentUser = userRepository.findByEmail(user);
 		
 	    if (currentUser != null) {
@@ -127,7 +137,6 @@ public class MyblogController {
 		Integer pageSize = 10;
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
 		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
-		System.out.println(pageNo + " - " +paging+ " - " + data);
 		
 		model.addAttribute("articles", data);
 		return "articles";
@@ -139,7 +148,37 @@ public class MyblogController {
 		Long no = Long.valueOf(num);
 		Article article = articleRepository.getReferenceById(no);
 		model.addAttribute("article", article);
+		session.setAttribute("num", no);
+		
+		Integer page = 0;
+		Integer pageSize = 20;
+		Pageable pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id");
+		Page<Comment> commentList = articleService.commentList(article, pageable);
+		
+		articleService.pageSet(model, commentList, "comments");
+		model.addAttribute("comments", commentList);
 		
 		return "article";
+	}
+	
+	@PostMapping(path="/comment")
+	public String writeComment(@ModelAttribute Comment comment, @ModelAttribute Article article,
+			Model model, HttpServletRequest request,
+			HttpSession session, RedirectAttributes rd) {
+		
+		String user = articleService.getUserData(session);
+		Long num = (Long)session.getAttribute("num");
+		
+		if (user == null) {
+			request.setAttribute("msg", "로그인이 필요한 기능입니다.");
+	        request.setAttribute("url", "/myblog/login");
+	        return "alert";
+		}
+		
+		String articleNum = num.toString();
+		articleService.writeComment(comment, user, num);
+
+		
+		return "redirect:/myblog/read?num="+articleNum;
 	}
 }

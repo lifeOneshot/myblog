@@ -1,12 +1,10 @@
 package ce.mnu.myblog;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
+
 public class Article {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
@@ -20,6 +18,10 @@ public class Article {
 
     @Column(length=2048, nullable=false)
     private String body;
+    
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OrderBy("id asc")
+    private List<Comment> comments;
 
     public Long getNum() { return num; }
 	public void setNum(Long n) { num=n; }
