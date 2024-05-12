@@ -18,6 +18,9 @@ public class Article {
     @Column(length=2048, nullable=false)
     private String body;
     
+    @Column(nullable=false)
+    private int viewcount = 0; // 추가된 조회수 속성
+    
     @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @OrderBy("id asc")
     private List<Comment> comments;
@@ -42,4 +45,7 @@ public class Article {
     public BlogUser getUserNo() {return user;}
     
 	public List<Comment> getComments() { return comments;}
+	
+	public int getViewCount() { return viewcount; }
+    public void setViewCount(int c) { this.viewcount = c; }
 }
