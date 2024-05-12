@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 	Article findByNum(Long num);
 	
-	@Query(value = "SELECT num, title, author FROM article", nativeQuery=true)
+	@Query(value = "SELECT num, title, author, viewcount FROM article", nativeQuery=true)
 	Page<ArticleHeader> findArticleHeaders(Pageable pageable);
 }
 
