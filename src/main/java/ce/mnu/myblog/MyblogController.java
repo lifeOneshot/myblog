@@ -200,7 +200,7 @@ public class MyblogController {
                 }
                 return "redirect:/bbs";
             } else {
-                rd.addFlashAttribute("reason", "delete failed");
+                rd.addFlashAttribute("reason", "wrong user");
                 return "redirect:/error";
             }
         } else {
