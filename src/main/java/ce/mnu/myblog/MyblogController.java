@@ -373,7 +373,6 @@ public class MyblogController {
 	        for (Article article : articles) {
 	            if (name.equals(article.getAuthor())) {
 	                article.setAuthor(user.getName());
-	                System.out.println(article.getAuthor());
 	                articleRepository.save(article);
 	            }
 	        }
@@ -384,7 +383,11 @@ public class MyblogController {
 	    session.setAttribute("name", user.getName());
 
 	    model.addAttribute("user", currentUser);
-
+	    if (email != null) {
+			model.addAttribute("login_C", true);
+			model.addAttribute("logout_C", false);
+			return "main";
+		}
 	    return "main";
 	}
 }
