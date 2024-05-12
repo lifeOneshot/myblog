@@ -16,7 +16,7 @@ import org.springframework.data.domain.*;
 
 
 @Controller
-@RequestMapping(path="/myblog")
+@RequestMapping(path={"", "/"})
 public class MyblogController {
 	@Autowired
 	private UserRepository userRepository;
@@ -54,7 +54,7 @@ public class MyblogController {
 		if(user != null){
 			if(passwd.equals(user.getPasswd())){
 				session.setAttribute("email", email);
-				return "redirect:/myblog";
+				return "redirect:/";
 			}
 		}
 		rd.addFlashAttribute("reason", "wrong password");
@@ -69,7 +69,7 @@ public class MyblogController {
 	@GetMapping(path="/logout")//로그아웃
 	public String logout(HttpSession session, Model model){
 		session.invalidate();
-		return "redirect:/myblog";
+		return "redirect:/";
 	}
 	
 	//유저 찾기
@@ -103,7 +103,7 @@ public class MyblogController {
 		
 		if (user == null) {
 			request.setAttribute("msg", "로그인이 필요한 기능입니다.");
-	        request.setAttribute("url", "/myblog/login");
+	        request.setAttribute("url", "/login");
 	        return "alert";
 		}
 		model.addAttribute("article", new Article());
@@ -171,7 +171,7 @@ public class MyblogController {
 		
 		if (user == null) {
 			request.setAttribute("msg", "로그인이 필요한 기능입니다.");
-	        request.setAttribute("url", "/myblog/login");
+	        request.setAttribute("url", "/login");
 	        return "alert";
 		}
 		
@@ -179,6 +179,6 @@ public class MyblogController {
 		articleService.writeComment(comment, user, num);
 
 		
-		return "redirect:/myblog/read?num="+articleNum;
+		return "redirect:/read?num="+articleNum;
 	}
 }

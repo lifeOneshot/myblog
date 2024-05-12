@@ -10,7 +10,7 @@
     <div class="article">
 		<h3>게시글</h3>
 		<p>
-			<a th:href="@{/myblog/bbs}">글 목록</a>
+			<a th:href="@{/bbs}">글 목록</a>
 		</p>
 		<table>
 			<tr><td>제목</td>><td>[[${article.title}]]</td></tr>
@@ -19,7 +19,7 @@
 		</table>
 		
 		<h3>댓글</h3>
-		<form action="#" th:action="@{/myblog/comment}" th:object="${comments}" method="post">
+		<form action="#" th:action="@{/comment}" th:object="${comments}" method="post">
 			<p><input type="text" th:field="*{content}"/></p>
 			<p>
 				<input type="submit" value="등록"/>
@@ -31,7 +31,7 @@
 		</table>
 		
 		<th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
-			<a th:if="${page != nowpage}" th:href="@{/myblog/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
+			<a th:if="${page != nowpage}" th:href="@{/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
 			<strong th:if="${page == nowpage}">[[${page}]]</strong> 
 		</th:block>
 	<!-- 
