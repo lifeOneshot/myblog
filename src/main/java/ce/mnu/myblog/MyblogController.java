@@ -129,6 +129,7 @@ public class MyblogController {
 		
 	    if (currentUser != null) {
 	        article.setAuthor(currentUser.getName());
+	        article.setUserNo(currentUser);
 	    }
 		
 		articleRepository.save(article);
@@ -156,8 +157,14 @@ public class MyblogController {
 			HttpSession session, Model model) {
 		Long no = Long.valueOf(num);
 		Article article = articleRepository.getReferenceById(no);
+		int updatedViewCount = article.getViewCount() + 1;
+		article.setViewCount(updatedViewCount);
+		articleRepository.save(article);
+		
 		model.addAttribute("article", article);
 		session.setAttribute("num", no);
+		
+		
 		
 		Integer page = 0;
 		Integer pageSize = 20;
