@@ -371,6 +371,14 @@ nav{
 	border-collapse: collapse;
 }
 
+.article td:first-child {
+    width: 20%;
+}
+
+.article td:last-child {
+    width: 80%;
+}
+
 .article a {
 	height: 80px;
 	background-color: #ffaa00;
@@ -386,4 +394,8 @@ nav{
 
 .article a:hover {
     background-color: #ffb92e;
+}
+
+.article input[type="text"] {
+    width: 70%;
 }

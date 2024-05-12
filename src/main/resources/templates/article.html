@@ -2,46 +2,44 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<style>
-		table, td {
-		border: 1px solid lightgray;
-		border-collapse: collapse;
-		}
-	</style>
-	<title>게시글</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<title>BLOGHOME</title>
 </head>
 <body>
-	<h3>게시글</h3>
-	<p>
-		<a th:href="@{/myblog/bbs}">글 목록</a>
-	</p>
-	<table style="width:100%">
-		<tr><td>제목</td><td>[[${article.title}]]</td></tr>
-		<tr><td>작성자</td><td>[[${article.author}]]</td></tr>
-		<tr><td>내용</td><td>[[${article.body}]]</td></tr>
-	</table>
-	
-	<form action="#" th:action="@{/myblog/comment}" th:object="${comments}" method="post">
-		<p><input type="text" th:field="*{content}"/></p>
+    <div th:insert="~{header::banner}"></div>
+    <div class="article">
+		<h3>게시글</h3>
 		<p>
-			<input type="reset" value="취소"/>
-			<input type="submit" value="등록"/>
+			<a th:href="@{/myblog/bbs}">글 목록</a>
 		</p>
-	</form>
-	
-	<ul th:each="c: ${comments}">
-		<li>[[${c.author}]]</li>
-		<li>[[${c.content}]]</li>
-	</ul>
-	<th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
-		<a th:if="${page != nowpage}" th:href="@{/myblog/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
-		<strong th:if="${page == nowpage}">[[${page}]]</strong> 
-	</th:block>
+		<table>
+			<tr><td>제목</td>><td>[[${article.title}]]</td></tr>
+			<tr><td>작성자</td>><td>[[${article.author}]]</td></tr>
+			<tr><td>내용</td>><td>[[${article.body}]]</td></tr>
+		</table>
+		
+		<h3>댓글</h3>
+		<form action="#" th:action="@{/myblog/comment}" th:object="${comments}" method="post">
+			<p><input type="text" th:field="*{content}"/></p>
+			<p>
+				<input type="submit" value="등록"/>
+			</p>
+		</form>
+		
+		<table th:each="c: ${comments}">
+			<tr><td>[[${c.author}]]</td>><td>[[${c.content}]]</td></tr>
+		</table>
+		
+		<th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
+			<a th:if="${page != nowpage}" th:href="@{/myblog/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
+			<strong th:if="${page == nowpage}">[[${page}]]</strong> 
+		</th:block>
 	<!-- 
 	<form th:action="@{/myblog/bbs/delete/{num}(num=${article.num})}" method="post">
         	<input type="submit" value="삭제"/>
     	</form>
     	<a th:href="@{/myblog/bbs/modify/{num}(num=${article.num})}">수정</a>
     -->
+    </div>
 </body>
 </html>
