@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/style.css">
+	<title>BLOGHOME</title>
+</head>
+<body>
+    <div th:insert="~{header::banner}"></div>
+    <div class="new_article">
+		<h3>게시물 글 작성</h3>
+		<form action="#" th:action="@{/bbs/modify/{num}(num=${updatedArticle.num})}" th:object="${updatedArticle}" method="post">
+			<p>제목: </p>
+			<p><input type="text" th:field="*{title}"/></p>	
+			<p>내용: </p>
+			<p><textarea th:field="*{body}"/></p>
+			<p>
+				<input type="reset" value="취소" onclick="location.href='/bbs'"/>
+				<input type="submit" value="변경"/>
+			</p>
+		</form>
+	</div>
+</body>
+</html>	
