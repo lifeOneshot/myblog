@@ -57,7 +57,7 @@ public class MyblogController {
 			if(passwd.equals(user.getPasswd())){
 				session.setAttribute("email", email);
 				session.setAttribute("name", user.getName());
-				return "redirect:/";
+				return "login_done";
 			}
 		}
 		request.setAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다.");
