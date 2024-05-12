@@ -56,6 +56,7 @@ public class MyblogController {
 		if(user != null){
 			if(passwd.equals(user.getPasswd())){
 				session.setAttribute("email", email);
+				session.setAttribute("name", user.getName());
 				return "redirect:/";
 			}
 		}
@@ -316,5 +317,70 @@ public class MyblogController {
 	    }
 	    rd.addFlashAttribute("reason", "wrong profile");
 	    return "redirect:/error";
+	}
+	
+	@GetMapping(path="/edit")
+	public String showEditProfileForm(HttpSession session, RedirectAttributes rd, Model model) {
+	    String email = (String) session.getAttribute("email");
+	    if (email == null) {
+	        rd.addFlashAttribute("reason", "login required");
+	        return "redirect:/error";
+	    }
+
+	    BlogUser currentUser = userRepository.findByEmail(email);
+	    if (currentUser == null) {
+	        rd.addFlashAttribute("reason", "user not found");
+	        return "redirect:/error";
+	    }
+
+	    model.addAttribute("user", currentUser);
+
+	    return "edit_profile";
+	}
+	
+	@PostMapping(path="/edit")
+	public String editProfile(@ModelAttribute BlogUser user, HttpSession session, RedirectAttributes rd, Model model) {
+	    String email = (String) session.getAttribute("email");
+	    String name = (String) session.getAttribute("name");
+	    if (email == null) {
+	        rd.addFlashAttribute("reason", "login required");
+	        return "redirect:/error";
+	    }
+
+	    BlogUser currentUser = userRepository.findByEmail(email);
+	    if (currentUser == null) {
+	        rd.addFlashAttribute("reason", "user not found");
+	        return "redirect:/error";
+	    }
+	    
+	    List<Comment> comments = currentUser.getComments();
+	    List<Article> articles = currentUser.getArticle();
+	    
+	    currentUser.setEmail(user.getEmail());
+	    currentUser.setName(user.getName());
+	    if (!user.getPasswd().isEmpty()) {
+	        currentUser.setPasswd(user.getPasswd());
+	        for (Comment comment : comments) {
+	            if (name.equals(comment.getAuthor())) {
+	                comment.setAuthor(user.getName());
+	                commentRepository.save(comment);
+	            }
+	        }
+	        for (Article article : articles) {
+	            if (name.equals(article.getAuthor())) {
+	                article.setAuthor(user.getName());
+	                System.out.println(article.getAuthor());
+	                articleRepository.save(article);
+	            }
+	        }
+	    }
+	    
+	    userRepository.save(currentUser);
+	    session.setAttribute("email", user.getEmail());
+	    session.setAttribute("name", user.getName());
+
+	    model.addAttribute("user", currentUser);
+
+	    return "main";
 	}
 }
