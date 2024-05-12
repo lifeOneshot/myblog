@@ -17,10 +17,12 @@
     box-sizing: border-box;
     margin-bottom: 30px;
 }
+
 .navbar{
     display: flex;
     align-items: center;
 }
+
 .logo{
     font-family: "Roboto-Bold", Helvetica;
     font-weight: 700;
@@ -28,6 +30,7 @@
     font-size: 34px;
     text-decoration: none;
 }
+
 .profile-icon{
     width: 30px;
     height: 30px;
@@ -36,10 +39,12 @@
     margin-left: 20px;
     cursor: pointer;
 }
+
 nav{
     flex: 1;
     text-align: right;
 }
+
 .navbar ul li{
     list-style: none;
     display: inline-block;
@@ -57,23 +62,21 @@ nav{
     width: 100%;
     height: 100vh;
     margin: auto;
-    /*border: 1px solid red;*/
     position: relative;
 }
+
 .box_container ul{
     width: 75%;
     height: 75%;
-    /* margin-right: 3%; */
     display: block;
     float: right;
-    /* border: 1px solid red; */
 }
+
 .box_container .box{
     list-style: none;
     width: 30%;
     height: 40%;
     margin-left: 5%;
-    /* margin-right: 20px; */
     margin-bottom: 40px;
     display: inline-block;
     background-color: rgba(200, 200, 200, 0.552);
@@ -81,13 +84,6 @@ nav{
     
 }
 
-.box_container .box .thumbnail{
-    width: 98%;
-    height: 60%;
-    margin: 0 auto;
-    display: block;
-    /* border: 1px solid red;  */
-}
 .box_container .box .con{
     padding: 5px;
     height: 15%;
@@ -95,13 +91,7 @@ nav{
     background: white;
     border: 1px solid rgb(0, 0, 0);
 }
-.box_container .box .article{
-    padding: 5px;
-    height: 15%;
-    border-radius: 2px;
-    background: white;
-    /*border: 1px solid blue;*/
-}
+
 .box_container button{
     width: 100%;
     background:none;
@@ -112,6 +102,7 @@ nav{
     text-align: left;
     cursor: pointer;
 }
+
 .box_container p{
     color: #000;
 }
@@ -127,8 +118,6 @@ nav{
 .sign_box_container .box{
     list-style: none;
     width: 30%;
-    /*height: 40%;*/
-    /* 박스가 중앙에 오도록 추가 */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -139,13 +128,16 @@ nav{
     border-radius: 10px;
     transition: 0.2s;
 }
+
 .sign_box_container h3 {
     margin-bottom: 30px; 
 }
+
 .sign_box_container p {
     margin-bottom: 10px; 
     text-align: center;
 }
+
 .sign_box_container input {
     height: 50px; 
     background-color: rgb(200, 200, 200);
@@ -153,6 +145,7 @@ nav{
     border-radius: 10px;
     text-align: center;
 }
+
 * input[type="submit"] {
 	height: 50px;
 	color: #fff;
@@ -161,11 +154,10 @@ nav{
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
-    padding: 0 20px; /* 좌우 여백을 20px로 설정 */
+    padding: 0 20px;
     font-size: 24px;
 }
 
-/* hover 효과 */
 * input[type="submit"]:hover {
     background-color: #ffb92e;
 }
@@ -178,31 +170,34 @@ nav{
     box-sizing: border-box;
     margin-bottom: 30px;
 }
+
 .in_navbar{
     display: flex;
     align-items:center;
 }
+
 .in_nav{
     flex: 1;
     text-align: center;
 }
+
 .in_navbar ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: center; /* 가운데 정렬 */
+    justify-content: center; 
 }
 
 .in_navbar ul li {
-    margin: 0 30px; /* 좌우 여백 조절 */
+    margin: 0 30px; 
     color: #fff;
     font-size: 17px;
     text-transform: uppercase;
     cursor: pointer;
 }
 
-/*로그인*/
+/* 로그인 */
 
 .user-actions-container {
     background: #ffffff; 
@@ -224,7 +219,7 @@ nav{
     border-radius: 10px; 
     padding: 10px; 
     text-align: center;
-    margin-bottom: 10px; /* 여백 추가 */
+    margin-bottom: 10px; 
 }
 
 .action-box:last-child {
@@ -246,8 +241,9 @@ nav{
     border-radius: 10px; 
     padding: 10px; 
     text-align: center;
-    margin-bottom: 10px; /* 여백 추가 */
+    margin-bottom: 10px; 
 }
+
 .action-box-main button {
     background:none;
     border:none;
@@ -258,6 +254,12 @@ nav{
     cursor: pointer;
 }
 
+.action-box-main, .action-box {
+    display: inline-block;
+}
+
+/* 글 목록 */
+
 .articles{
     margin-left: 5%;
 }
@@ -267,10 +269,12 @@ nav{
 	border: 1px solid rgb(0, 0, 0);
 	border-collapse: collapse;
 }
+
 .articles th{
 	border: 1px solid rgb(0, 0, 0);
     background-color: #ffaa00;
 }
+
 .articles td{
 	border: 1px solid rgb(0, 0, 0);
 	border-collapse: collapse;
@@ -287,23 +291,22 @@ nav{
 .articles .action-box {
 	width: 100px;
     height: 40px;
-    float: right; /* 오른쪽으로 띄워서 표의 오른쪽에 배치 */
-    margin-top: 10px; /* 표와의 간격 조정 */
+    float: right;
+    margin-top: 10px;
     position: fixed;
-    right: 30%; /* 원하는 위치로 조정 */
+    right: 30%;
 }
+
 .articles .action-box-main {
 	width: 100px;
     height: 40px;
-    float: right; /* 오른쪽으로 띄워서 표의 오른쪽에 배치 */
-    margin-top: 10px; /* 표와의 간격 조정 */
+    float: right;
+    margin-top: 10px;
     position: fixed;
-    left: 5%; /* 원하는 위치로 조정 */
+    left: 5%;
 }
-.action-box-main, .action-box {
-    display: inline-block; /* 버튼을 가로로 배치하기 위해 인라인 블록 요소로 설정 */
-    margin-right: 10px; /* 버튼 사이의 간격 조정 */
-}
+
+/* 글 작성 */
 
 .new_article{
     margin-left: 5%;
@@ -321,11 +324,12 @@ nav{
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
-    padding: 11px 20px; /* 좌우 여백을 20px로 설정 */
+    padding: 11px 20px;
     font-size: 24px;
     border-radius: 10px;
     text-decoration: none;
 }
+
 .new_article a:hover {
     background-color: #ffb92e;
 }
@@ -341,9 +345,11 @@ nav{
 }
 
 .new_article label {
-    display: block; /* 라벨을 블록 요소로 설정하여 줄 바꿈을 가능하게 합니다. */
-    margin-bottom: 10px; /* 라벨 아래 여백을 추가합니다. */
+    display: block;
+    margin-bottom: 10px;
 }
+
+/* 게시글 */
 
 .article{
     margin-left: 5%;
@@ -354,10 +360,12 @@ nav{
 	border: 1px solid rgb(0, 0, 0);
 	border-collapse: collapse;
 }
+
 .article th{
 	border: 1px solid rgb(0, 0, 0);
    background-color: #ffaa00;
 }
+
 .article td{
 	border: 1px solid rgb(0, 0, 0);
 	border-collapse: collapse;
@@ -370,11 +378,12 @@ nav{
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
-    padding: 11px 20px; /* 좌우 여백을 20px로 설정 */
+    padding: 11px 20px;
     font-size: 24px;
     border-radius: 10px;
     text-decoration: none;
 }
+
 .article a:hover {
     background-color: #ffb92e;
 }
