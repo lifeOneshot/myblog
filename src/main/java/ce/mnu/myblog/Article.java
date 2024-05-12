@@ -34,4 +34,7 @@ public class Article {
 	
 	public String getBody() { return body; }
 	public void setBody(String b) { body=b; }
+	
+	public List<Comment> getComments() { return comments;}
+	
 }
