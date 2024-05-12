@@ -17,20 +17,23 @@
 					<a th:href="@{/myblog/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
 				<td th:text="${a.author}"></td>
 			</tr> 
-			<div class="page_no">
-				<tr>
-					<td colspan=3>
-						<th:block th:if="${articles.totalPages} == 0">
-							<a th:href="@{/myblog/bbs?pno=0}">1</a>
-						</th:block>
-						<th:block th:if="${articles.totalPages} > 0" th:each="p:${#numbers.sequence(1, articles.totalPages)}">
-							<a th:href="@{/myblog/bbs?pno={p}(p=${p-1})}">[[${p}]]</a>
-						</th:block>
-					</td>
-				</tr>
-			</div>
+			<tr class="page_no">
+				<td colspan=3>
+					<th:block th:if="${articles.totalPages} == 0">
+						<a th:href="@{/myblog/bbs?pno=0}">1</a>
+					</th:block>
+					<th:block th:if="${articles.totalPages} > 0" th:each="p:${#numbers.sequence(1, articles.totalPages)}">
+						<a th:href="@{/myblog/bbs?pno={p}(p=${p-1})}">[[${p}]]</a>
+					</th:block>
+				</td>
+			</tr>
 		</table>
-		<p><a th:href="@{/myblog/bbs/write}">글 작성</a></p>
+		<div class="action-box-main">
+			<button onclick="window.location.href='/myblog'">메인화면</button>
+		</div>
+		<div class="action-box">
+			<button onclick="window.location.href='/myblog/bbs/write'">글작성</button>
+		</div>
 	</div>
 </body>
 </html>
