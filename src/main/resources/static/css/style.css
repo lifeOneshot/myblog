@@ -162,6 +162,22 @@ nav{
     background-color: #ffb92e;
 }
 
+* input[type="reset"] {
+	height: 50px;
+	color: #fff;
+    background-color: #ffaa00;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 0 20px;
+    font-size: 24px;
+}
+
+* input[type="reset"]:hover {
+    background-color: #ffb92e;
+}
+
 .inner_banner{
     background: #ffaa00;
     padding: 10px;
@@ -395,6 +411,24 @@ nav{
 .article a:hover {
     background-color: #ffb92e;
 }
+
+.article .article-actions {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+.article .article-actions a {
+	height: 25px;
+    
+}
+	
+
+.article .article-actions > * {
+    margin-right: 10px;
+}
+
 
 .article input[type="text"] {
     width: 70%;

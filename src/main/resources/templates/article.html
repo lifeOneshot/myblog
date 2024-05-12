@@ -9,9 +9,14 @@
     <div th:insert="~{header::banner}"></div>
     <div class="article">
 		<h3>게시글</h3>
-		<p>
-			<a th:href="@{/bbs}">글 목록</a>
-		</p>
+		<div class="article-actions">
+    		<a th:href="@{/bbs}">글 목록</a>
+    		<form th:action="@{/bbs/delete/{num}(num=${article.num})}" method="post">
+        		<input type="submit" value="삭제"/>
+    		</form>
+    		<a th:href="@{/bbs/modify/{num}(num=${article.num})}">수정</a>
+		</div>
+		
 		<table>
 			<tr><td>제목</td>><td>[[${article.title}]]</td></tr>
 			<tr><td>작성자</td>><td>[[${article.author}]]</td></tr>
@@ -34,10 +39,7 @@
 			<a th:if="${page != nowpage}" th:href="@{/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
 			<strong th:if="${page == nowpage}">[[${page}]]</strong> 
 		</th:block>
-	<form th:action="@{/bbs/delete/{num}(num=${article.num})}" method="post">
-        	<input type="submit" value="삭제"/>
-    	</form>
-    	<a th:href="@{/bbs/modify/{num}(num=${article.num})}">수정</a>
+
     </div>
 </body>
 </html>
