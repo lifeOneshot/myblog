@@ -25,7 +25,7 @@
 		
 		<h3>댓글</h3>
 		<form action="#" th:action="@{/comment}" th:object="${comments}" method="post">
-			<p><input type="text" th:field="*{content}"/></p>
+			<p><input type="text" th:field="*{content}" id="commentinput"/></p>
 			<p>
 				<input type="submit" value="등록"/>
 			</p>
@@ -39,7 +39,12 @@
 			<a th:if="${page != nowpage}" th:href="@{/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
 			<strong th:if="${page == nowpage}">[[${page}]]</strong> 
 		</th:block>
-
     </div>
+    <script>
+	    window.onload = function() {
+	        var comment = document.getElementById('commentinput');
+	        comment.value = "";
+	    };
+    </script>
 </body>
 </html>
