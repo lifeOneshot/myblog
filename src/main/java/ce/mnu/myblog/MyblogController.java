@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.*;
+import java.util.List;
 
 
 @Controller
@@ -49,7 +51,6 @@ public class MyblogController {
 	
 	@PostMapping(path="/login")//로그인 기능
 	public String login(@RequestParam(name="email") String email, @RequestParam(name="passwd") String passwd, 
-			HttpServletRequest request,
 			HttpSession session, RedirectAttributes rd) {
 		BlogUser user = userRepository.findByEmail(email);
 		if(user != null){
@@ -58,9 +59,8 @@ public class MyblogController {
 				return "redirect:/";
 			}
 		}
-		request.setAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다.");
-        request.setAttribute("url", "/login");
-        return "alert";
+		rd.addFlashAttribute("reason", "wrong password");
+		return "redirect:/error";
 	}
 
 	@GetMapping(path="/login") //로그인
@@ -76,17 +76,14 @@ public class MyblogController {
 	
 	//유저 찾기
 	@PostMapping(path="/find")
-	public String findUser(@RequestParam(name="email") String email,
-			HttpServletRequest request,
-			HttpSession session, Model model, RedirectAttributes rd){
+	public String findUser(@RequestParam(name="email") String email, HttpSession session, Model model, RedirectAttributes rd){
 		BlogUser user = userRepository.findByEmail(email);
 		if(user != null) {
 			model.addAttribute("user", user);
 			return "find_done";
 		}
-		request.setAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다.");
-        request.setAttribute("url", "/login");
-        return "alert";
+		rd.addFlashAttribute("reason", "wrong email");
+		return "redirect:/error";
 	}
 	
 	@GetMapping(path="/find")
@@ -99,6 +96,8 @@ public class MyblogController {
 	private ArticleRepository articleRepository;
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@GetMapping(path="/bbs/write")
 	public String boardForm(Model model, 
@@ -166,6 +165,99 @@ public class MyblogController {
 		return "article";
 	}
 	
+	@PostMapping(path="/bbs/delete/{num}")
+    public String deleteArticle(@PathVariable("num") Long num, HttpSession session, RedirectAttributes rd) {
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            rd.addFlashAttribute("reason", "login required");
+            return "redirect:/error";
+        }
+
+        BlogUser currentUser = userRepository.findByEmail(email);
+        if (currentUser == null) {
+            rd.addFlashAttribute("reason", "user not found");
+            return "redirect:/error";
+        }
+        
+        Long no = Long.valueOf(num);
+
+        Article article = articleRepository.findByNum(no);
+        List<Comment> comments = article.getComments();
+        
+        if (article != null) {
+
+            if (article.getAuthor().equals(currentUser.getName())) {
+                articleRepository.delete(article);
+                if (comments != null && !comments.isEmpty()) {
+                    for (Comment comment : comments) {
+                        commentRepository.delete(comment);
+                    }
+                }
+                return "redirect:/bbs";
+            } else {
+                rd.addFlashAttribute("reason", "delete failed");
+                return "redirect:/error";
+            }
+        } else {
+            rd.addFlashAttribute("reason", "article not found");
+            return "redirect:/error";
+        }
+    }
+	
+	@GetMapping(path="/bbs/modify/{num}")
+	public String showUpdateForm(@PathVariable("num") Long num, HttpSession session, RedirectAttributes rd, Model model) {
+	    String email = (String) session.getAttribute("email");
+	    if (email == null) {
+	        rd.addFlashAttribute("reason", "login required");
+	        return "redirect:/error";
+	    }
+
+	    BlogUser currentUser = userRepository.findByEmail(email);
+	    if (currentUser == null) {
+	        rd.addFlashAttribute("reason", "user not found");
+	        return "redirect:/error";
+	    }
+	    	
+	    Long no = Long.valueOf(num);
+	    
+	    Article updatedArticle = articleRepository.findByNum(no);
+	    if (updatedArticle != null && updatedArticle.getAuthor().equals(currentUser.getName())) {
+	        model.addAttribute("updatedArticle", updatedArticle);
+	        return "modify";
+	    } else {
+	        rd.addFlashAttribute("reason", "cant modify");
+	        return "redirect:/error";
+	    }
+	}
+
+	@PostMapping(path="/bbs/modify/{num}")
+	public String updateArticle(@PathVariable("num") Long num, @ModelAttribute("updatedArticle") Article updatedArticle, HttpSession session, RedirectAttributes rd) {
+	    String email = (String) session.getAttribute("email");
+	    if (email == null) {
+	        rd.addFlashAttribute("reason", "login required");
+	        return "redirect:/error";
+	    }
+
+	    BlogUser currentUser = userRepository.findByEmail(email);
+	    if (currentUser == null) {
+	        rd.addFlashAttribute("reason", "user not found");
+	        return "redirect:/error";
+	    }
+	    	
+	    Long no = Long.valueOf(num);
+	    Article existingArticle = articleRepository.getReferenceById(no);
+
+	    if (existingArticle != null && existingArticle.getAuthor().equals(currentUser.getName())) {
+	        existingArticle.setTitle(updatedArticle.getTitle());
+	        existingArticle.setBody(updatedArticle.getBody());
+	        articleRepository.save(existingArticle);
+	        return "redirect:/bbs";
+	    } else {
+	        rd.addFlashAttribute("reason", "can't modify");
+	        return "redirect:/error";
+	    }
+	}
+	
 	@PostMapping(path="/comment")
 	public String writeComment(@ModelAttribute Comment comment, @ModelAttribute Article article,
 			Model model, HttpServletRequest request,
@@ -185,5 +277,44 @@ public class MyblogController {
 
 		
 		return "redirect:/read?num="+articleNum;
+	}
+	
+	@GetMapping(path="/withdrawal")
+	public String withdrawalForm(HttpSession session, RedirectAttributes rd, Model model) {
+		String email = (String) session.getAttribute("email");
+	    if (email == null) {
+	        rd.addFlashAttribute("reason", "login required");
+	        return "redirect:/error";
+	    }
+
+	    BlogUser currentUser = userRepository.findByEmail(email);
+	    
+	    if (currentUser == null) {
+	        rd.addFlashAttribute("reason", "user not found");
+	        return "redirect:/error";
+	    }
+
+	    model.addAttribute("user", currentUser);
+
+	    return "withdrawal";
+	}
+	
+	@PostMapping(path="/withdrawal")
+	public String withdrawal(@RequestParam(name="email") String emailin, @RequestParam(name="passwd") String passwdin, HttpSession session, RedirectAttributes rd) {
+	    String email = (String) session.getAttribute("email");	
+	    
+	    BlogUser user = userRepository.findByEmail(email);
+	    
+	    if (emailin != null) {
+	        if (user != null) {
+	        	if(passwdin.equals(user.getPasswd()) && emailin.equals(user.getEmail())) {
+	        		userRepository.delete(user);
+	        		session.invalidate();
+	        		return "withdrawal_done";
+	        	}
+	        }
+	    }
+	    rd.addFlashAttribute("reason", "wrong profile");
+	    return "redirect:/error";
 	}
 }
