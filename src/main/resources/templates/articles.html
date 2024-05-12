@@ -11,12 +11,20 @@
 		<h3>게시글 목록</h3>
 		
 		<table>
-			<tr><th>제목</th><th>작성자</th></tr>
+			<tr>
+    			<th>제목</th>
+    			<th>작성자</th>
+    			<th>조회수</th>
+			</tr>
 			<tr th:each="a: ${articles}">
-				<td>
-					<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
-				<td th:text="${a.author}"></td>
-			</tr> 
+        		<td>
+            		<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+        		</td>
+        		<td th:text="${a.author}"></td>
+        		<td>
+            		<p th:text="${a.viewCount}"></p>
+        		</td>
+    		</tr>
 			<tr class="page_no">
 				<td colspan=3>
 					<th:block th:if="${articles.totalPages} == 0">
