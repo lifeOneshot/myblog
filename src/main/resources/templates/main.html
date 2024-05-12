@@ -23,10 +23,10 @@
 		<div th:style="${logout_C} ? '' : 'display:none'" id="no_user" class="user-actions-container">
 			<div class="user-actions">
 				<div class="action-box">
-					<button onclick="window.location.href='/myblog/signup'">사용자 등록</button>
+					<button onclick="window.location.href='/signup'">사용자 등록</button>
 				</div>
 				<div class="action-box">
-					<button onclick="window.location.href='/myblog/login'">사용자 로그인</button>
+					<button onclick="window.location.href='/login'">사용자 로그인</button>
 				</div>
 			</div>
 		</div>
@@ -35,31 +35,31 @@
 		<div th:style="${login_C} ? '' : 'display:none'" id="yes_user" class="user-actions-container">
 			<div class="user-actions">
 				<div class="action-box">
-					<button onclick="window.location.href='/myblog/logout'">로그아웃</button>
+					<button onclick="window.location.href='/logout'">로그아웃</button>
 				</div>
 				<div class="action-box">
-					<button onclick="window.location.href='/myblog/withdrawal'">회원탈퇴</button>
+					<button onclick="window.location.href='/withdrawal'">회원탈퇴</button>
 				</div>
 			</div>
 		</div>
 
 		<li class="box">
 			<div class="con">
-				<button onclick="window.location.href='/myblog/bbs'">게시판</button>
+				<button onclick="window.location.href='/bbs'">게시판</button>
 			</div>
 			<tr th:each="a: ${articles}">
 				<td>
-					<a th:href="@{/myblog/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+					<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
 				<td th:text="${a.author}"></td>
 			</tr> 
 		</li>
 		<li class="box">
 			<div class="con">
-				<button onclick="window.location.href='/myblog/bbs'">TEST</button>
+				<button onclick="window.location.href='/bbs'">TEST</button>
 			</div>
 			<tr th:each="a: ${articles}">
 				<td>
-					<a th:href="@{/myblog/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+					<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
 				<td th:text="${a.author}"></td>
 			</tr> 
 		</li>
