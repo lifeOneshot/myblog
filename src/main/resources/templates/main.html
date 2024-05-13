@@ -99,7 +99,7 @@
 	</form>
 	
 	<div th:each="blog: ${blogUser}">
-		<p><a th:href="@{/(blogUser=${blog.name})}">[[${blog.name}]]</a>#[[${blog.userNo}]]</p>
+		<p><a th:href="@{/(blogUser=${blog.userNo})}">[[${blog.name}]]</a>#[[${blog.userNo}]]</p>
 	</div>
 	
 	<!-- 자동 로그인 
