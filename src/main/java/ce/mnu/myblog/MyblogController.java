@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.*;
+
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -24,8 +26,22 @@ public class MyblogController {
 	private UserRepository userRepository;
 	
 	@GetMapping(value = {"", "/"})
-	public String main(HttpSession session, Model model) {
+	public String main(HttpSession session, Model model, @RequestParam(name="pno", defaultValue="0") String pno) {
 		String email = (String) session.getAttribute("email");
+		
+		Integer pageNo = 0;
+		if(pno != null) {
+			pageNo = Integer.valueOf(pno);
+		}
+		
+		Integer pageSize = 3;
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "viewcount");
+		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
+		model.addAttribute("articles", data);
+		Pageable n_paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
+		Page<ArticleHeader> n_data = articleRepository.findArticleHeaders(n_paging);
+		model.addAttribute("n_articles", n_data);
+		
 		if (email != null) {
 			model.addAttribute("login_C", true);
 			model.addAttribute("logout_C", false);

@@ -46,25 +46,47 @@
 			</div>
 		</div>
 
-		<li class="box">
+		<li class="box" id="hot">
 			<div class="con">
-				<button onclick="window.location.href='/bbs'">게시판</button>
+				<button onclick="window.location.href='/bbs'">인기 게시글</button>
 			</div>
-			<tr th:each="a: ${articles}">
-				<td>
-					<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
-				<td th:text="${a.author}"></td>
-			</tr> 
+			<table>
+				<tr>
+	    			<th>제목</th>
+	    			<th>작성자</th>
+	    			<th>조회수</th>
+				</tr>
+				<tr th:each="a: ${articles}">
+        			<td>
+            			<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+        			</td>
+        			<td th:text="${a.author}"></td>
+        			<td>
+            			<p th:text="${a.viewCount}"></p>
+        			</td>
+    			</tr>
+    		</table>
 		</li>
-		<li class="box">
+		<li class="box" id="new">
 			<div class="con">
-				<button onclick="window.location.href='/bbs'">TEST</button>
+				<button onclick="window.location.href='/bbs'">최근 게시글</button>
 			</div>
-			<tr th:each="a: ${articles}">
-				<td>
-					<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
-				<td th:text="${a.author}"></td>
-			</tr> 
+			<table>
+				<tr>
+	    			<th>제목</th>
+	    			<th>작성자</th>
+	    			<th>조회수</th>
+				</tr>
+				<tr th:each="a: ${n_articles}">
+        			<td>
+            			<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+        			</td>
+        			<td th:text="${a.author}"></td>
+        			<td>
+            			<p th:text="${a.viewCount}"></p>
+        			</td>
+    			</tr>
+    		</table>
 		</li>
 	</section>
 	
