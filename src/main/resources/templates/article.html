@@ -25,6 +25,7 @@
 		</table>
 		
 		<h3>댓글</h3>
+
 		<form action="#" th:action="@{/comment}" th:object="${comments}" method="post">
 			<p><input type="text" th:field="*{content}" id="commentinput"/></p>
 			<p>
@@ -36,11 +37,25 @@
 			<tr><td>[[${c.author}]]</td>><td>[[${c.content}]]</td></tr>
 		</table>
 		
-		<th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
-			<a th:if="${page != nowpage}" th:href="@{/read?num={id}(id=${article.num})?page={page}(page=${page-1}) }">[[${page}]]</a>
-			<strong th:if="${page == nowpage}">[[${page}]]</strong> 
-		</th:block>
-    </div>
+		<table>
+		<tr>
+		<td colspan=3>
+			<p><a th:if="${page > 1}" th:href="@{/read(num=${article.num},page=${nowpage-1})}"> &lt;prev </a></p>
+
+			<th:block th:if="${page == 0}">
+				<strong>1</strong>
+			</th:block>
+			<th:block th:if="${page > 0}" th:each="page: ${#numbers.sequence(startPage, endPage)}">
+				<a th:if="${page != nowpage}" th:href="@{/read(num=${article.num},page=${page-1})}">[[${page}]]</a>
+				<strong th:if="${page == nowpage}">[[${page}]]</strong> 
+				
+			</th:block>
+				
+
+			<p><a th:if="${page < endpage}" th:href="@{/read(num=${article.num},page=${nowpage+1})}"> next> </a></p>
+		</td>
+		</tr>
+		</table>
     <script>
 	    window.onload = function() {
 	        var comment = document.getElementById('commentinput');
