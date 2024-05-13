@@ -115,15 +115,32 @@ public class MyblogController {
 	//친구&블로그 검색
 	@PostMapping(path="/search")
 	public String searchBlog(@RequestParam(name="userName") String userName,
-			HttpServletRequest request, Model model) {
+			HttpServletRequest request, Model model, RedirectAttributes rd ) {
 		List<BlogUser> blogUser = userRepository.findByName(userName);
 		if(blogUser == null) {
 			model.addAttribute("msg", "해당하는 사용자가 없습니다.");
 			model.addAttribute("url", "/");
 			return "alert";
 		}
-		model.addAttribute("blogUser", blogUser);
-		return "main";
+		rd.addFlashAttribute("blogUser",blogUser);
+//		rd.addAttribute("blogUser", blogUser);
+		return "redirect:/";
+	}
+	
+	@GetMapping(path="/bbs")
+	public String getAllArticles(@RequestParam(name="pno", defaultValue="0") String pno, 
+			Model model) {
+		Integer pageNo = 0;
+		if(pno != null) {
+			pageNo = Integer.valueOf(pno);
+		}
+		
+		Integer pageSize = 10;
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
+		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
+		
+		model.addAttribute("articles", data);
+		return "articles";
 	}
 	
 	//게시판 관련
@@ -167,20 +184,6 @@ public class MyblogController {
 		return "saved";
 	}
 	
-	@GetMapping(path="/bbs")
-	public String getAllArticles(@RequestParam(name="pno", defaultValue="0") String pno, Model model) {
-		Integer pageNo = 0;
-		if(pno != null) {
-			pageNo = Integer.valueOf(pno);
-		}
-		
-		Integer pageSize = 10;
-		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
-		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
-		
-		model.addAttribute("articles", data);
-		return "articles";
-	}
 	
 	@GetMapping(path="/read")
 	public String readArticle(@RequestParam(name="num") String num,
