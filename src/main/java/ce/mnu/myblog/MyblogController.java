@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.*;
+import org.springframework.data.web.PageableDefault;
+
 import java.util.List;
 
 
@@ -22,10 +24,16 @@ import java.util.List;
 public class MyblogController {
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private ArticleRepository articleRepository;
+	@Autowired
+	private ArticleService articleService;
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@GetMapping(value = {"", "/"})
 	public String main(HttpSession session, Model model) {
-		String email = (String) session.getAttribute("email");
+		String email = articleService.getUserData(session);
 		if (email != null) {
 			model.addAttribute("login_C", true);
 			model.addAttribute("logout_C", false);
@@ -50,8 +58,10 @@ public class MyblogController {
 	}
 	
 	@PostMapping(path="/login")//로그인 기능
-	public String login(@RequestParam(name="email") String email, @RequestParam(name="passwd") String passwd, 
-			HttpSession session, RedirectAttributes rd) {
+	public String login(@RequestParam(name="email") String email, 
+			@RequestParam(name="passwd") String passwd,
+			HttpServletRequest request, HttpSession session) {
+		
 		BlogUser user = userRepository.findByEmail(email);
 		if(user != null){
 			if(passwd.equals(user.getPasswd())){
@@ -59,8 +69,9 @@ public class MyblogController {
 				return "redirect:/";
 			}
 		}
-		rd.addFlashAttribute("reason", "wrong password");
-		return "redirect:/error";
+		request.setAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다.");
+        request.setAttribute("url", "/login");
+        return "alert";
 	}
 
 	@GetMapping(path="/login") //로그인
@@ -76,14 +87,16 @@ public class MyblogController {
 	
 	//유저 찾기
 	@PostMapping(path="/find")
-	public String findUser(@RequestParam(name="email") String email, HttpSession session, Model model, RedirectAttributes rd){
+	public String findUser(@RequestParam(name="email") String email, 
+			HttpSession session, HttpServletRequest request, Model model){
 		BlogUser user = userRepository.findByEmail(email);
 		if(user != null) {
 			model.addAttribute("user", user);
 			return "find_done";
 		}
-		rd.addFlashAttribute("reason", "wrong email");
-		return "redirect:/error";
+		model.addAttribute("msg", "해당하는 계정이 없습니다.");
+		model.addAttribute("url", "/find");
+		return "alert";
 	}
 	
 	@GetMapping(path="/find")
@@ -92,17 +105,10 @@ public class MyblogController {
 	}
 	
 	//게시판 관련
-	@Autowired
-	private ArticleRepository articleRepository;
-	@Autowired
-	private ArticleService articleService;
-	@Autowired
-	private CommentRepository commentRepository;
 	
 	@GetMapping(path="/bbs/write")
 	public String boardForm(Model model, 
-			HttpSession session,
-			HttpServletRequest request) {
+			HttpSession session, HttpServletRequest request) {
 		String user = articleService.getUserData(session);
 		
 		if (user == null) {
@@ -116,9 +122,9 @@ public class MyblogController {
 	
 	@PostMapping(path="/bbs/add")
 	public String addArticle(@ModelAttribute Article article, 
-			HttpSession session,
-			HttpServletRequest request,
-			RedirectAttributes rd, Model model) {
+			HttpSession session, HttpServletRequest request,
+			Model model) {
+		
 		String user = articleService.getUserData(session);
 		BlogUser currentUser = userRepository.findByEmail(user);
 		
@@ -148,15 +154,14 @@ public class MyblogController {
 	
 	@GetMapping(path="/read")
 	public String readArticle(@RequestParam(name="num") String num,
+			@PageableDefault(page=0, size=10, sort="id", direction=Sort.Direction.DESC) Pageable pageable, 
 			HttpSession session, Model model) {
+		
 		Long no = Long.valueOf(num);
 		Article article = articleRepository.getReferenceById(no);
 		model.addAttribute("article", article);
 		session.setAttribute("num", no);
 		
-		Integer page = 0;
-		Integer pageSize = 20;
-		Pageable pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id");
 		Page<Comment> commentList = articleService.commentList(article, pageable);
 		
 		articleService.pageSet(model, commentList, "comments");
@@ -166,17 +171,21 @@ public class MyblogController {
 	}
 	
 	@PostMapping(path="/bbs/delete/{num}")
-    public String deleteArticle(@PathVariable("num") Long num, HttpSession session, RedirectAttributes rd) {
+    public String deleteArticle(@PathVariable("num") Long num, 
+    		HttpSession session, HttpServletRequest request,
+    		RedirectAttributes rd) {
         String email = (String) session.getAttribute("email");
         if (email == null) {
-            rd.addFlashAttribute("reason", "login required");
-            return "redirect:/error";
+        	request.setAttribute("msg", "로그인이 필요한 기능입니다.");
+	        request.setAttribute("url", "/login");
+	        return "alert";
         }
 
         BlogUser currentUser = userRepository.findByEmail(email);
         if (currentUser == null) {
-            rd.addFlashAttribute("reason", "user not found");
-            return "redirect:/error";
+        	request.setAttribute("msg", "해당되는 사용자를 찾을 수 없습니다.");
+	        request.setAttribute("url", "/bbs/read?num={num}");
+	        return "alert";
         }
         
         Long no = Long.valueOf(num);
@@ -205,11 +214,14 @@ public class MyblogController {
     }
 	
 	@GetMapping(path="/bbs/modify/{num}")
-	public String showUpdateForm(@PathVariable("num") Long num, HttpSession session, RedirectAttributes rd, Model model) {
+	public String showUpdateForm(@PathVariable("num") Long num, 
+			HttpSession session, HttpServletRequest request,
+			RedirectAttributes rd, Model model) {
 	    String email = (String) session.getAttribute("email");
 	    if (email == null) {
-	        rd.addFlashAttribute("reason", "login required");
-	        return "redirect:/error";
+	    	request.setAttribute("msg", "로그인이 필요한 기능입니다.");
+	        request.setAttribute("url", "/login");
+	        return "alert";
 	    }
 
 	    BlogUser currentUser = userRepository.findByEmail(email);
@@ -225,17 +237,21 @@ public class MyblogController {
 	        model.addAttribute("updatedArticle", updatedArticle);
 	        return "modify";
 	    } else {
-	        rd.addFlashAttribute("reason", "cant modify");
+	        rd.addFlashAttribute("reason", "can't modify");
 	        return "redirect:/error";
 	    }
 	}
 
 	@PostMapping(path="/bbs/modify/{num}")
-	public String updateArticle(@PathVariable("num") Long num, @ModelAttribute("updatedArticle") Article updatedArticle, HttpSession session, RedirectAttributes rd) {
+	public String updateArticle(@PathVariable("num") Long num, 
+			@ModelAttribute("updatedArticle") Article updatedArticle, 
+			HttpSession session, HttpServletRequest request,
+			RedirectAttributes rd) {
 	    String email = (String) session.getAttribute("email");
 	    if (email == null) {
-	        rd.addFlashAttribute("reason", "login required");
-	        return "redirect:/error";
+	    	request.setAttribute("msg", "로그인이 필요한 기능입니다.");
+	        request.setAttribute("url", "/login");
+	        return "alert";
 	    }
 
 	    BlogUser currentUser = userRepository.findByEmail(email);
@@ -280,11 +296,13 @@ public class MyblogController {
 	}
 	
 	@GetMapping(path="/withdrawal")
-	public String withdrawalForm(HttpSession session, RedirectAttributes rd, Model model) {
+	public String withdrawalForm(HttpSession session, HttpServletRequest request,
+			RedirectAttributes rd, Model model) {
 		String email = (String) session.getAttribute("email");
 	    if (email == null) {
-	        rd.addFlashAttribute("reason", "login required");
-	        return "redirect:/error";
+	    	request.setAttribute("msg", "로그인이 필요한 기능입니다.");
+	        request.setAttribute("url", "/login");
+	        return "alert";
 	    }
 
 	    BlogUser currentUser = userRepository.findByEmail(email);

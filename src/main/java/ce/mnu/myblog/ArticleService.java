@@ -18,12 +18,13 @@ public class ArticleService {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	
-	public String getUserData(HttpSession session) {
+	//현 사용자 email 정보 획득 
+	public String getUserData(HttpSession session) { 
 		String user = (String) session.getAttribute("email");
 		return user;
 	}
 	
+	//댓글 생성 함수
 	public void writeComment(Comment comment, String email, Long num) {
 		BlogUser user = userRepository.findByEmail(email);
 		Article article = articleRepository.getReferenceById(num);
@@ -38,10 +39,12 @@ public class ArticleService {
 //		return articleRepository.findAll(pagable);
 //	}
 	
+	//댓글 페이징 함수
 	public Page<Comment> commentList(Article article, Pageable pageable){
 		return commentRepository.findByArticle(article, pageable);
 	}
 	
+	//자동 페이징 추가
 	public void pageSet(Model model, Page<?> list, String listName) {
 		int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);

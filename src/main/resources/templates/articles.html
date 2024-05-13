@@ -14,13 +14,13 @@
 			<tr><th>제목</th><th>작성자</th></tr>
 			<tr th:each="a: ${articles}">
 				<td>
-					<a th:href="@{/read?num={id}(id=${a.num})}">[[${a.title}]]</a>
+					<a th:href="@{/read?num={num}(num=${a.num})}">[[${a.title}]]</a>
 				<td th:text="${a.author}"></td>
 			</tr> 
 			<tr class="page_no">
 				<td colspan=3>
 					<th:block th:if="${articles.totalPages} == 0">
-						<a th:href="@{/bbs?pno=0}">1</a>
+						<strong>1</strong>
 					</th:block>
 					<th:block th:if="${articles.totalPages} > 0" th:each="p:${#numbers.sequence(1, articles.totalPages)}">
 						<a th:href="@{/bbs?pno={p}(p=${p-1})}">[[${p}]]</a>
