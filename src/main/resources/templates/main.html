@@ -90,6 +90,18 @@
 		</li>
 	</section>
 	
+	<form action="#" th:action="@{/search}" method="post">
+		<p>이메일: <input type="text" name="userName"/></p>
+		<p>
+			<input type="submit" value="검색"/>
+			<input type="reset" value="취소" onclick="location.href='/'"/>
+		</p>
+	</form>
+	
+	<div th:each="blog: ${blogUser}">
+		<p><a th:href="@{/(blogUser=${blog.name})}">[[${blog.name}]]</a>#[[${blog.userNo}]]</p>
+	</div>
+	
 	<!-- 자동 로그인 
 	<form action="#" th:action="@{/myblog/login}" method="post">
 		<input type="hidden" value="admin@1" name="email"/> 

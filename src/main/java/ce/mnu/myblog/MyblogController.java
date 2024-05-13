@@ -110,6 +110,20 @@ public class MyblogController {
 	@GetMapping(path="/find")
 	public String find() {
 		return "find_user";
+	}	
+	
+	//친구&블로그 검색
+	@PostMapping(path="/search")
+	public String searchBlog(@RequestParam(name="userName") String userName,
+			HttpServletRequest request, Model model) {
+		List<BlogUser> blogUser = userRepository.findByName(userName);
+		if(blogUser == null) {
+			model.addAttribute("msg", "해당하는 사용자가 없습니다.");
+			model.addAttribute("url", "/");
+			return "alert";
+		}
+		model.addAttribute("blogUser", blogUser);
+		return "main";
 	}
 	
 	//게시판 관련
