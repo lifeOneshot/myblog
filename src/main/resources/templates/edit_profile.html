@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/style.css">
+	<title>BLOGHOME</title>
+</head>
+<body>
+    <div th:insert="~{header::banner}"></div>
+	<section class="sign_box_container">
+		<li class="box">
+			<h3>계정 정보 변경</h3>
+			<form action="#" th:action="@{/edit}" th:object="${user}" method="post">
+				<p>ID:<input type="email" th:field="*{email}" th:value="${user.email}"readonly/></p>
+				<p>이름:<input type="text" th:field="*{name}" th:value="${user.name}"/></p>
+				<p>암호: <input type="password" th:field="*{passwd}" th:value="${user.passwd}"/></p>
+				<p>
+					<input type="submit" value="변경"/>
+					<input type="reset" value="취소" onclick="location.href='/'"/>
+				</p>
+			</form>
+		</li>
+	</section>
+</body>
+</html>

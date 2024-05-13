@@ -20,5 +20,25 @@
 			<p>로그인이 필요한 서비스입니다</p>
 			<p><a href="/login">로그인</a></p>
 		</th:block>
+		
+		<th:block th:if="${reason} == 'user not found' ">
+			<p>찾는 사용자가 없습니다.</p>
+			<p><a href="/login">로그인</a></p>
+		</th:block>
+		
+		<th:block th:if="${reason} == 'wrong user' ">
+			<p>글 작성자만 삭제 가능합니다.</p>
+			<p><a href="/bbs">게시판으로 돌아가기</a></p>
+		</th:block>
+		
+		<th:block th:if="${reason} == 'article not found' ">
+			<p>존재하지 않는 글 입니다.</p>
+			<p><a href="/bbs">게시판으로 돌아가기</a></p>
+		</th:block>
+		
+		<th:block th:if="${reason} == 'cant modify' ">
+			<p>글 작성자만 수정 가능합니다.</p>
+			<p><a href="/bbs">게시판으로 돌아가기</a></p>
+		</th:block>
 	</body>
 </html>

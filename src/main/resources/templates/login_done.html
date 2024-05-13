@@ -2,11 +2,18 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>사용자 로그인 완료</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<title>BLOGHOME</title>
 </head>
 <body>
-	<h3>사용자 로그인 완료</h3>
-	<p th:text="${session.email}" />
-	<p><a th:href="@{/}" >메인으로</a></p>
+    <div th:insert="~{header::banner}"></div>
+	<section class="sign_box_container">
+		<li class="box">
+			<h3>로그인 완료</h3>
+			<div class="action-box">
+				<button onclick="window.location.href='/'">메인화면으로 돌아가기</button>
+			</div>
+		</li>
+	</section>
 </body>
 </html>

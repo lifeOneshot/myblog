@@ -2,11 +2,21 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>사용자 검색 완료</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<title>BLOGHOME</title>
 </head>
 <body>
-	<h3>사용자 검색 완료</h3>
-	<p th:text="|${user.name}님|" />
-	<p th:text="|주소:${user.email}|"/>
+    <div th:insert="~{header::banner}"></div>
+	<section class="sign_box_container">
+		<li class="box">
+			<h3>사용자 검색 완료</h3>
+			<p th:text="|${user.email}님의 계정 정보는|" />
+			<p th:text="|이름:${user.name}|"/>
+			<p th:text="|암호:${user.passwd}입니다.|"/>
+			<div class="action-box">
+				<button onclick="window.location.href='/login'">로그인</button>
+			</div>
+		</li>
+	</section>
 </body>
 </html>

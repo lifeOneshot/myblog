@@ -28,6 +28,9 @@ public class ArticleService {
 	public void writeComment(Comment comment, String email, Long num) {
 		BlogUser user = userRepository.findByEmail(email);
 		Article article = articleRepository.getReferenceById(num);
+		int updatedViewCount = article.getViewCount() - 1;
+		article.setViewCount(updatedViewCount);
+		articleRepository.save(article);
 		comment.setUserNo(user);
 		comment.setArticleNum(article);
 		comment.setAuthor(user.getName());
