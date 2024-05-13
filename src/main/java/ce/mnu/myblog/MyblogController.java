@@ -123,7 +123,27 @@ public class MyblogController {
 			return "alert";
 		}
 		model.addAttribute("blogUser", blogUser);
-		return "main";
+		return "redirect:/";
+	}
+	
+	@GetMapping(path="/blogUser")
+	public String getAllArticles(@RequestParam(name="pno", defaultValue="0") String pno, 
+			@RequestParam("blogUser") String blogUser,
+			Model model) {
+		Long no = Long.valueOf(blogUser);
+		BlogUser user = userRepository.findByNo(no);
+		String email = user.getEmail();
+		Integer pageNo = 0;
+		if(pno != null) {
+			pageNo = Integer.valueOf(pno);
+		}
+		
+		Integer pageSize = 10;
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
+		Page<ArticleHeader> data = articleRepository.findArticleHeadersByEmail(email, paging);
+		
+		model.addAttribute("articles", data);
+		return "articles";
 	}
 	
 	//게시판 관련
@@ -167,20 +187,6 @@ public class MyblogController {
 		return "saved";
 	}
 	
-	@GetMapping(path="/bbs")
-	public String getAllArticles(@RequestParam(name="pno", defaultValue="0") String pno, Model model) {
-		Integer pageNo = 0;
-		if(pno != null) {
-			pageNo = Integer.valueOf(pno);
-		}
-		
-		Integer pageSize = 10;
-		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "num");
-		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
-		
-		model.addAttribute("articles", data);
-		return "articles";
-	}
 	
 	@GetMapping(path="/read")
 	public String readArticle(@RequestParam(name="num") String num,
