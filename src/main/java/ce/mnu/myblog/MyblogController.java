@@ -426,7 +426,7 @@ public class MyblogController {
 	    if (email != null) {
 			model.addAttribute("login_C", true);
 			model.addAttribute("logout_C", false);
-			return "main";
+			return "redirect:/";
 		}
 	    return "main";
 	}
