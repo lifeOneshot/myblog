@@ -22,6 +22,7 @@ public class ArticleService {
 	public String getUserData(HttpSession session) { 
 		String user = (String) session.getAttribute("email");
 		return user;
+		//secret 키 업데이트로 인한 배포용 커밋 위해 추가함
 	}
 	
 	//댓글 생성 함수
