@@ -3,22 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/header.css">
 	<title>BLOGHOME</title>
 </head>
 <body>
-    <div th:insert="~{header::banner}"></div>
+    <div th:insert="~{header::header}"></div>
 	<!-- 컨테이너 섹션 -->
 	<section class="box_container">
-		<div class="inner_banner">
-			<div class="in_navbar">
-				<in_nav>
-					<ul>
-						<li >Test</li>
-						<li >Test</li>
-					</ul>
-				</in_nav>
-			</div>
-		</div>
+		
 		<!-- 로그인 아닐시 -->
 		<div th:style="${logout_C} ? '' : 'display:none'" id="no_user" class="user-actions-container">
 			<div class="user-actions">
