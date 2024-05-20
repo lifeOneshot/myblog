@@ -32,6 +32,7 @@ public class BlogUser {
 	
 	public String getEmail() { return email; }
 	public void setEmail(String e) { email=e; }
+//테스트용
 	
 	public String getName() { return name; }
 	public void setName(String n) {name=n;}
