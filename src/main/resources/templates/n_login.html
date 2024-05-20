@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/header.css">
-	<title>BLOGHOME</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast UI Editor Example</title>
+    <!-- TUI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
 </head>
 <body>
-    <div th:insert="~{header::header}"></div>
-	<section class="sign_box_container">
-		<li class="box">
-			<h3>사용자 로그인</h3>
-			<form action="#" th:action="@{/login}" method="post">
-				<p>이메일: <input type="email" name="email"/></p>
-				<p>암호: <input type="password" name="passwd"/></p>
-				<p>
-					<input type="submit" value="로그인"/>
-					<input type="reset" value="취소" onclick="location.href='/'"/>
-					<input type="reset" value="사용자 검색" onclick="location.href='/find'"/>
-				</p>
-			</form>
-		</li>
-	</section>
+    <h1>Toast UI Editor Integration</h1>
+    <div id="editor"></div>
+
+    <!-- TUI Editor JS -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+        // Initialize TUI Editor
+        const Editor = toastui.Editor;
+        const editor = new Editor({
+            el: document.querySelector('#editor'),
+            height: '500px',
+            initialEditType: 'markdown',
+            previewStyle: 'vertical'
+        });
+    </script>
 </body>
 </html>
