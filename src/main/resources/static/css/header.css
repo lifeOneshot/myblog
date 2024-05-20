@@ -10,6 +10,7 @@
 .logo {
     margin-left: 15%;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .nav {
@@ -25,6 +26,22 @@
     font-size: 2vh;
 }
 
+.nav a::after{
+    content: '';
+    width: 0%;
+    height: 2px;
+    border-radius: 3px;
+    background: #333;
+    display: block;
+    margin: auto;
+
+    bottom: -4px;
+    transition: 0.5s;
+}
+.nav a:hover::after{
+    width: 100%;
+}
+
 .icons {
     margin-right: 15%;        
     display: flex;
@@ -35,6 +52,12 @@
 .icon {
     font-size: 2vh;
     color: #333;
+    cursor: pointer;
+}
+
+.icon:hover{
+    background-color: #f2f2f2;
+    border-radius: 3px;
 }
 
 .login-button {
@@ -45,4 +68,10 @@
     border-radius: 1vh;
     cursor: pointer;
     font-size: 2vh;
+}
+
+.login-button:hover{
+    background-color: #00997d;
+    color: #fff;
+
 }
