@@ -22,8 +22,12 @@
 			<tr><td>제목</td>><td>[[${article.title}]]</td></tr>
 			<tr><td>작성자</td>><td>[[${article.author}]]</td></tr>
 			<tr><td>조회수</td>><td>[[${article.viewCount}]]</td></tr>
-			<tr><td>내용</td>><td>[[${article.body}]]</td></tr>
 		</table>
+
+		<div style="border: 1px solid black; width: 70%;"> 
+			<span class="contentBox" th:utext="${article.body}">내용이 들어가는 공간입니다.</span>
+		</div>
+		
 		
 		<h3>댓글</h3>
 
