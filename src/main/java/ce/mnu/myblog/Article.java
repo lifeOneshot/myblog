@@ -16,7 +16,7 @@ public class Article {
     private String title;
 
     @Lob
-    @Column(nullable=false)
+    @Column(columnDefinition = "text")
     private String body;
     
     @Column(nullable=false)
