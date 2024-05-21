@@ -91,7 +91,8 @@ public class MyblogController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
+	/*
 	//유저 찾기
 	@PostMapping(path="/find")
 	public String findUser(@RequestParam(name="email") String email,
@@ -110,7 +111,9 @@ public class MyblogController {
 	@GetMapping(path="/find")
 	public String find() {
 		return "find_user";
-	}	
+	}
+
+	 */
 	
 	//친구&블로그 검색
 	@PostMapping(path="/search")
