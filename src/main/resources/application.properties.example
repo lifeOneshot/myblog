@@ -7,9 +7,9 @@ spring.jpa.hibernate.ddl-auto=update
 #spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
 
 # MariaDB
-spring.datasource.url=your url
-spring.datasource.username=your id
-spring.datasource.password=your password
+spring.datasource.url=사랑해요
+spring.datasource.username=오마이갓
+spring.datasource.password=your 이게리얼?
 spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
 
 server.port=8080
