@@ -13,3 +13,4 @@ spring.datasource.password=your password
 spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
 
 server.port=8080
+
