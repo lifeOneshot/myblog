@@ -29,18 +29,30 @@
 </body>
 
 <script>
-
 	const submitButton = document.getElementById('submitButton');
 
-	submitButton.addEventListener('click', function () {
+	submitButton.addEventListener('click', function (event) {
+		const titleContent = document.querySelector('input[type="text"]').value;
+		if (titleContent.length > 50) {
+			alert('제목은 50자를 초과할 수 없습니다.');
+			event.preventDefault();
+			return;
+		}
+
 		// 폼 제출 전 작업 (예: 편집기 내용 숨겨진 필드에 복사)
 		const editorContent = document.getElementById('editor').innerHTML;
 		document.getElementById('content').value = editorContent;
 
+		// 내용이 65000자를 초과하면 폼 제출 중단
+		if (editorContent.length > 65000) {
+			alert('게시물의 내용은 65000자를 초과할 수 없습니다.');
+			event.preventDefault();
+			return;
+		}
+
 		// 폼 제출
 		form.submit();
 	});
-
 </script>
 
 </html>

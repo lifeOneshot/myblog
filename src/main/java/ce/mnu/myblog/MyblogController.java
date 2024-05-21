@@ -178,7 +178,19 @@ public class MyblogController {
 	        article.setAuthor(currentUser.getName());
 	        article.setUserNo(currentUser);
 	    }
-		
+
+		// 제목이 50자를 초과하면 에러 메시지 반환
+		if (article.getTitle().length() > 50) {
+			rd.addFlashAttribute("reason", "제목은 50자를 초과할 수 없습니다.");
+			return "redirect:/error";
+		}
+
+		// 게시물의 내용이 65000자를 초과하면 에러 메시지 반환
+		if (article.getBody().length() > 65000) {
+			rd.addFlashAttribute("reason", "게시물의 내용은 65000자를 초과할 수 없습니다.");
+			return "redirect:/error";
+		}
+
 		articleRepository.save(article);
 		model.addAttribute("article", article);
 		return "saved";
