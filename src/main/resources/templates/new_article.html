@@ -21,6 +21,9 @@
 
 			</div>
 			<p>
+				현재 글자 수 : <span id="currentCharsCount">0</span> / 1000
+			</p>
+			<p>
 				<button class="btnSave" id="submitButton">등록</button>
 				<input type="reset" value="취소" onclick="location.href='/bbs'" />
 			</p>
@@ -31,15 +34,45 @@
 <script>
 
 	const submitButton = document.getElementById('submitButton');
+	const editor = document.getElementById('editor');
 
 	submitButton.addEventListener('click', function () {
 		// 폼 제출 전 작업 (예: 편집기 내용 숨겨진 필드에 복사)
-		const editorContent = document.getElementById('editor').innerHTML;
+		const editorContent = editor.innerHTML;
 		document.getElementById('content').value = editorContent;
 
 		// 폼 제출
 		form.submit();
 	});
+
+	//글자 수 제한시키는 코드
+
+	const currentCharsCount = document.getElementById('currentCharsCount');
+    const maxChars = 1000;
+
+	const updateCharCount = () => {
+        const text = editor.innerText;
+        currentCharsCount.textContent = text.length;
+    };
+	
+	const handleInput = (e) => {
+        const text = editor.innerText;
+        if (text.length > maxChars) {
+            alert('글자 수는 1000자를 넘을 수 없습니다.');
+            editor.innerText = text.substring(0, maxChars);
+            // Move the cursor to the end after truncation
+            const range = document.createRange();
+            const sel = window.getSelection();
+            range.setStart(editor.childNodes[0], maxChars);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+        updateCharCount();
+    };
+
+
+    editor.addEventListener('input', handleInput);
 
 </script>
 
