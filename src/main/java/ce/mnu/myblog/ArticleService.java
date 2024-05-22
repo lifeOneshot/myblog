@@ -2,6 +2,7 @@ package ce.mnu.myblog;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,13 +19,19 @@ public class ArticleService {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	//현 사용자 email 정보 획득 
-	public String getUserData(HttpSession session) { 
-		String user = (String) session.getAttribute("email");
-		return user;
-		//secret 키 업데이트로 인한 배포용 커밋 위해 추가함
+	//세션 이메일 체크 메서드
+	public void loginCheck(HttpSession session, Model model) { 
+		String EmailData = (String)session.getAttribute("email");
+		System.out.println(EmailData);
+		if (EmailData != null) {
+			model.addAttribute("logined", true);
+		}
+		else{
+			model.addAttribute("logined", false);
+		}
+		System.out.println(model+ " == "+EmailData +" ==" +model.getAttribute("logined"));
 	}
-	
+
 	//댓글 생성 함수
 	public void writeComment(Comment comment, String email, Long num) {
 		BlogUser user = userRepository.findByEmail(email);

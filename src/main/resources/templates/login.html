@@ -5,6 +5,8 @@
 	<meta charset="UTF-8">
 	<title>로그인</title>
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Jua:wght@400;500;600&display=swap');
+
 		html,
 		body {
 			width: 100%;
@@ -12,6 +14,7 @@
 			padding: 0;
 			margin: 0;
 			background-color: white;
+			font-family: 'jua';
 		}
 
 		body {
@@ -21,17 +24,22 @@
 			overflow: hidden;
 		}
 
+		.logo img{
+			width: 30vh;
+		}
+
 		.loginBox {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			margin: 10vh;
 		}
 
 		.loginBox .logoText {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			font-size: 3vh;
+			font-size: 6vh;
 			font-weight: bolder;
 			margin: 2vh;
 		}
@@ -42,7 +50,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			width: 100%;
+			width: 70%;
 		}
 
 		
@@ -64,9 +72,22 @@
 			margin-top: 1vh;
 			margin-bottom: 1vh;	
 			color: white;
+			font-family: 'jua';
 			font-weight: bold;
-			font-size: 1.5vh;
+			font-size: 3vh;
+			cursor: pointer;
 		}
+
+		.etcBox a{
+			margin: 15vh;
+			color: #333;
+			font-size: 2.5vh;
+		}
+		
+		.etcBox a:visited{
+			color: #333;
+		}
+
 	</style>
 </head>
 
@@ -75,9 +96,9 @@
 	<div class="loginBox">
 
 		<div class="logo">
-
-			<img src="https://easyportstorage.blob.core.windows.net/defaultimages/mnin_icon.png" width="110vh" />
-
+			<a th:href="@{/}">
+			<img src="https://easyportstorage.blob.core.windows.net/defaultimages/mnin_icon.png" />
+			</a>
 		</div>
 
 		<div class="logoText">
@@ -95,7 +116,7 @@
 			<input type="email" name="email" placeholder="이메일" class="inputD"/>
 			<input type="password" name="passwd" placeholder="비밀번호" class="inputD" />
 
-			<input type="submit" value="로그인" id="btnSubmit" />
+			<input type="submit" value="로 그 인" id="btnSubmit" />
 
 
 		</form>

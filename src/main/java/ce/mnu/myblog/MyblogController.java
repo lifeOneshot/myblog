@@ -25,11 +25,18 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping(path={"", "/"})
 public class MyblogController {
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository userRepository; // 유저 레포
+	@Autowired
+	private ArticleRepository articleRepository; // 게시글 레포
+	@Autowired
+	private ArticleService articleService; // 사용자 지정 함수 모음 서비스
+	@Autowired
+	private CommentRepository commentRepository; // 댓글 레포
 	
 	@GetMapping(value = {"", "/"})
-	public String main(HttpSession session, Model model, @RequestParam(name="pno", defaultValue="0") String pno) {
-		String email = (String) session.getAttribute("email");
+	public String main(HttpSession session, Model model, 
+	@RequestParam(name="pno", defaultValue="0") String pno) {
+		String user = (String) session.getAttribute("email");
 		
 		Integer pageNo = 0;
 		if(pno != null) {
@@ -44,13 +51,7 @@ public class MyblogController {
 		Page<ArticleHeader> n_data = articleRepository.findArticleHeaders(n_paging);
 		model.addAttribute("n_articles", n_data);
 		
-		if (email != null) {
-			model.addAttribute("login_C", true);
-			model.addAttribute("logout_C", false);
-			return "main";
-		}
-		model.addAttribute("login_C", false);
-		model.addAttribute("logout_C", true);
+		articleService.loginCheck(session, model);
 		return "main";
 	}
 	
@@ -134,7 +135,7 @@ public class MyblogController {
 	
 	@GetMapping(path="/bbs")
 	public String getAllArticles(@RequestParam(name="pno", defaultValue="0") String pno, 
-			Model model) {
+			HttpSession session, Model model) {
 		Integer pageNo = 0;
 		if(pno != null) {
 			pageNo = Integer.valueOf(pno);
@@ -145,22 +146,16 @@ public class MyblogController {
 		Page<ArticleHeader> data = articleRepository.findArticleHeaders(paging);
 		
 		model.addAttribute("articles", data);
+		articleService.loginCheck(session, model);
 		return "articles";
 	}
 	
 	//게시판 관련
-	@Autowired
-	private ArticleRepository articleRepository;
-	@Autowired
-	private ArticleService articleService;
-	@Autowired
-	private CommentRepository commentRepository;
 	
 	@GetMapping(path="/bbs/write")
-	public String boardForm(Model model, 
-			HttpSession session,
+	public String boardForm(Model model, HttpSession session,
 			HttpServletRequest request) {
-		String user = articleService.getUserData(session);
+		String user = (String) session.getAttribute("email");
 		
 		if (user == null) {
 			request.setAttribute("msg", "로그인이 필요한 기능입니다.");
@@ -168,6 +163,7 @@ public class MyblogController {
 	        return "alert";
 		}
 		model.addAttribute("article", new Article());
+		articleService.loginCheck(session, model);
 		return "new_article";
 	}
 	
@@ -176,7 +172,7 @@ public class MyblogController {
 			HttpSession session,
 			HttpServletRequest request,
 			RedirectAttributes rd, Model model) {
-		String user = articleService.getUserData(session);
+		String user = (String) session.getAttribute("email");
 		BlogUser currentUser = userRepository.findByEmail(user);
 		
 	    if (currentUser != null) {
@@ -223,7 +219,7 @@ public class MyblogController {
 		
 		articleService.pageSet(model, commentList, "comments");
 		model.addAttribute("comments", commentList);
-		
+		articleService.loginCheck(session, model);
 		return "article";
 	}
 	
@@ -267,7 +263,9 @@ public class MyblogController {
     }
 	
 	@GetMapping(path="/bbs/modify/{num}")
-	public String showUpdateForm(@PathVariable("num") Long num, HttpSession session, RedirectAttributes rd, Model model) {
+	public String showUpdateForm(@PathVariable("num") Long num, 
+	HttpSession session, Model model,
+	RedirectAttributes rd) {
 	    String email = (String) session.getAttribute("email");
 	    if (email == null) {
 	        rd.addFlashAttribute("reason", "login required");
@@ -285,6 +283,7 @@ public class MyblogController {
 	    Article updatedArticle = articleRepository.findByNum(no);
 	    if (updatedArticle != null && updatedArticle.getAuthor().equals(currentUser.getName())) {
 	        model.addAttribute("updatedArticle", updatedArticle);
+			articleService.loginCheck(session, model);
 	        return "modify";
 	    } else {
 	        rd.addFlashAttribute("reason", "cant modify");
@@ -325,7 +324,7 @@ public class MyblogController {
 			Model model, HttpServletRequest request,
 			HttpSession session, RedirectAttributes rd) {
 		
-		String user = articleService.getUserData(session);
+		String user = (String) session.getAttribute("email");
 		Long num = (Long)session.getAttribute("num");
 		
 		if (user == null) {
@@ -447,4 +446,6 @@ public class MyblogController {
 		}
 	    return "main";
 	}
+
+
 }

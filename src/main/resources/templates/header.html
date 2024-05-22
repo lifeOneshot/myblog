@@ -15,7 +15,15 @@
     <div class="icons">
         <span class="icon user-icon">👤</span>
         <span class="icon notification-icon">🔔</span>
-        <button class="login-button">로그인</button>
+        <!-- 로그인 아닐시 -->
+		<block th:style="${logined} ? 'display:none' : ''" >
+			<button class="login-button" onclick="window.location.href='/login'">로그인</button>
+		</block>
+
+		<!-- 로그인 시 -->
+		<block th:style="${logined} ? '' : 'display:none'">
+			<button class="login-button" onclick="window.location.href='/logout'">로그아웃</button>
+		</block>
     </div>
 </div>
 
