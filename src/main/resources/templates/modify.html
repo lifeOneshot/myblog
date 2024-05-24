@@ -3,10 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/header.css">
 	<title>BLOGHOME</title>
 </head>
 <body>
-    <div th:insert="~{header::banner}"></div>
+    <div th:insert="~{header::header}"></div>
     <div class="new_article">
 		<h3>게시물 글 작성</h3>
 		<form action="#" th:action="@{/bbs/modify/{num}(num=${updatedArticle.num})}" th:object="${updatedArticle}" method="post">

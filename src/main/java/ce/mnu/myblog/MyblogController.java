@@ -224,17 +224,21 @@ public class MyblogController {
 	}
 	
 	@PostMapping(path="/bbs/delete/{num}")
-    public String deleteArticle(@PathVariable("num") Long num, HttpSession session, RedirectAttributes rd) {
+    public String deleteArticle(@PathVariable("num") Long num, 
+	HttpSession session, HttpServletRequest request,
+	RedirectAttributes rd) {
         String email = (String) session.getAttribute("email");
         if (email == null) {
-            rd.addFlashAttribute("reason", "login required");
-            return "redirect:/error";
+            request.setAttribute("msg", "로그인이 필요한 기능입니다.");
+			request.setAttribute("url", "/login");	
+			return "alert";
         }
 
         BlogUser currentUser = userRepository.findByEmail(email);
         if (currentUser == null) {
-            rd.addFlashAttribute("reason", "user not found");
-            return "redirect:/error";
+            request.setAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다.");
+			request.setAttribute("url", "/login");	
+			return "alert";
         }
         
         Long no = Long.valueOf(num);
